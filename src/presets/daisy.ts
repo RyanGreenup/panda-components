@@ -3,9 +3,12 @@ import pandaPreset from "@pandacss/preset-panda";
 import dracula from "./themes/dracula";
 import synthwave from "./themes/synthwave";
 import LightTheme from "./themes/light";
+import night from "./themes/night";
+import corporate from "./themes/corporate";
 
-const prefersDarkTheme = dracula;
-const darkTheme = dracula;
+const prefersDarkTheme = night;
+const darkTheme = night;
+const defaultTheme = corporate;
 
 const backgroundTransition = "background-color 0.2s ease, color 0.2s ease";
 
@@ -37,16 +40,16 @@ export default definePreset({
         base: {
           100: {
             value: {
-              base: LightTheme.base[100].value,
+              base: defaultTheme.base[100].value,
               _dark: darkTheme.base[100].value,
-              _osDark: dracula.base[100].value,
+              _osDark: prefersDarkTheme.base[100].value,
               _synthwaveTheme: synthwave.base[100].value,
             },
             description: "Adaptive lightest base color",
           },
           200: {
             value: {
-              base: LightTheme.base[200].value,
+              base: defaultTheme.base[200].value,
               _dark: darkTheme.base[200].value,
               _osDark: prefersDarkTheme.base[200].value,
               _synthwaveTheme: synthwave.base[200].value,
@@ -55,7 +58,7 @@ export default definePreset({
           },
           300: {
             value: {
-              base: LightTheme.base[300].value,
+              base: defaultTheme.base[300].value,
               _dark: darkTheme.base[300].value,
               _osDark: prefersDarkTheme.base[300].value,
               _synthwaveTheme: synthwave.base[300].value,
@@ -64,7 +67,7 @@ export default definePreset({
           },
           content: {
             value: {
-              base: LightTheme.base.content.value,
+              base: defaultTheme.base.content.value,
               _dark: darkTheme.base.content.value,
               _osDark: prefersDarkTheme.base.content.value,
               _synthwaveTheme: synthwave.base.content.value,
@@ -75,7 +78,7 @@ export default definePreset({
         content: {
           primary: {
             value: {
-              base: LightTheme.content.primary.value,
+              base: defaultTheme.content.primary.value,
               _dark: darkTheme.content.primary.value,
               _osDark: prefersDarkTheme.content.primary.value,
               _synthwaveTheme: synthwave.content.primary.value,
@@ -83,7 +86,7 @@ export default definePreset({
           },
           secondary: {
             value: {
-              base: LightTheme.content.secondary.value,
+              base: defaultTheme.content.secondary.value,
               _dark: darkTheme.content.secondary.value,
               _osDark: prefersDarkTheme.content.secondary.value,
               _synthwaveTheme: synthwave.content.secondary.value,
@@ -91,7 +94,7 @@ export default definePreset({
           },
           accent: {
             value: {
-              base: LightTheme.content.accent.value,
+              base: defaultTheme.content.accent.value,
               _dark: darkTheme.content.accent.value,
               _osDark: prefersDarkTheme.content.accent.value,
               _synthwaveTheme: synthwave.content.accent.value,
@@ -99,7 +102,7 @@ export default definePreset({
           },
           neutral: {
             value: {
-              base: LightTheme.content.neutral.value,
+              base: defaultTheme.content.neutral.value,
               _dark: darkTheme.content.neutral.value,
               _osDark: prefersDarkTheme.content.neutral.value,
               _synthwaveTheme: synthwave.content.neutral.value,
@@ -107,28 +110,28 @@ export default definePreset({
           },
           info: {
             value: {
-              base: LightTheme.content.info.value,
+              base: defaultTheme.content.info.value,
               _dark: darkTheme.content.info.value,
               _synthwaveTheme: synthwave.content.info.value,
             },
           },
           success: {
             value: {
-              base: LightTheme.content.success.value,
+              base: defaultTheme.content.success.value,
               _dark: darkTheme.content.success.value,
               _synthwaveTheme: synthwave.content.success.value,
             },
           },
           warning: {
             value: {
-              base: LightTheme.content.warning.value,
+              base: defaultTheme.content.warning.value,
               _dark: darkTheme.content.warning.value,
               _synthwaveTheme: synthwave.content.warning.value,
             },
           },
           error: {
             value: {
-              base: LightTheme.content.error.value,
+              base: defaultTheme.content.error.value,
               _dark: darkTheme.content.error.value,
               _synthwaveTheme: synthwave.content.error.value,
             },
@@ -137,7 +140,7 @@ export default definePreset({
         // Brand colors with dark mode
         primary: {
           value: {
-            base: LightTheme.primary.value,
+            base: defaultTheme.primary.value,
             _dark: darkTheme.primary.value,
             _osDark: prefersDarkTheme.primary.value,
             _synthwaveTheme: synthwave.primary.value,
@@ -146,7 +149,7 @@ export default definePreset({
         },
         secondary: {
           value: {
-            base: LightTheme.secondary.value,
+            base: defaultTheme.secondary.value,
             _dark: darkTheme.secondary.value,
             _osDark: prefersDarkTheme.secondary.value,
             _synthwaveTheme: synthwave.secondary.value,
@@ -155,7 +158,7 @@ export default definePreset({
         },
         accent: {
           value: {
-            base: LightTheme.accent.value,
+            base: defaultTheme.accent.value,
             _dark: darkTheme.accent.value,
             _osDark: prefersDarkTheme.accent.value,
             _synthwaveTheme: synthwave.accent.value,
@@ -164,7 +167,7 @@ export default definePreset({
         },
         neutral: {
           value: {
-            base: LightTheme.neutral.value,
+            base: defaultTheme.neutral.value,
             _dark: darkTheme.neutral.value,
             _osDark: prefersDarkTheme.neutral.value,
             _synthwaveTheme: synthwave.neutral.value,
@@ -173,7 +176,7 @@ export default definePreset({
         },
         info: {
           value: {
-            base: LightTheme.info.value,
+            base: defaultTheme.info.value,
             _dark: darkTheme.info.value,
             _osDark: prefersDarkTheme.info.value,
             _synthwaveTheme: synthwave.info.value,
@@ -182,7 +185,7 @@ export default definePreset({
         },
         success: {
           value: {
-            base: LightTheme.success.value,
+            base: defaultTheme.success.value,
             _dark: darkTheme.success.value,
             _osDark: prefersDarkTheme.success.value,
             _synthwaveTheme: synthwave.success.value,
@@ -191,7 +194,7 @@ export default definePreset({
         },
         warning: {
           value: {
-            base: LightTheme.warning.value,
+            base: defaultTheme.warning.value,
             _dark: darkTheme.warning.value,
             _osDark: prefersDarkTheme.warning.value,
             _synthwaveTheme: synthwave.warning.value,
@@ -200,7 +203,7 @@ export default definePreset({
         },
         error: {
           value: {
-            base: LightTheme.error.value,
+            base: defaultTheme.error.value,
             _dark: darkTheme.error.value,
             _osDark: prefersDarkTheme.error.value,
             _synthwaveTheme: synthwave.error.value,
@@ -237,42 +240,42 @@ export default definePreset({
           headings: {
             1: {
               value: {
-                base: LightTheme.base.content.value,
+                base: defaultTheme.base.content.value,
                 _dark: darkTheme.base.content.value,
                 _osDark: prefersDarkTheme.base.content.value,
               },
             },
             2: {
               value: {
-                base: LightTheme.base.content.value,
+                base: defaultTheme.base.content.value,
                 _dark: darkTheme.base.content.value,
                 _osDark: prefersDarkTheme.base.content.value,
               },
             },
             3: {
               value: {
-                base: LightTheme.base.content.value,
+                base: defaultTheme.base.content.value,
                 _dark: darkTheme.base.content.value,
                 _osDark: prefersDarkTheme.base.content.value,
               },
             },
             4: {
               value: {
-                base: LightTheme.base.content.value,
+                base: defaultTheme.base.content.value,
                 _dark: darkTheme.base.content.value,
                 _osDark: prefersDarkTheme.base.content.value,
               },
             },
             5: {
               value: {
-                base: LightTheme.base.content.value,
+                base: defaultTheme.base.content.value,
                 _dark: darkTheme.base.content.value,
                 _osDark: prefersDarkTheme.base.content.value,
               },
             },
             6: {
               value: {
-                base: LightTheme.base.content.value,
+                base: defaultTheme.base.content.value,
                 _dark: darkTheme.base.content.value,
                 _osDark: prefersDarkTheme.base.content.value,
               },
@@ -301,7 +304,7 @@ export default definePreset({
       radii: {
         selector: {
           value: {
-            base: LightTheme.radius.selector.value,
+            base: defaultTheme.radius.selector.value,
             _dark: darkTheme.radius.selector.value,
             _osDark: prefersDarkTheme.radius.selector.value,
             _synthwaveTheme: synthwave.radius.selector.value,
@@ -309,7 +312,7 @@ export default definePreset({
         },
         field: {
           value: {
-            base: LightTheme.radius.field.value,
+            base: defaultTheme.radius.field.value,
             _dark: darkTheme.radius.field.value,
             _osDark: prefersDarkTheme.radius.field.value,
             _synthwaveTheme: synthwave.radius.field.value,
@@ -317,7 +320,7 @@ export default definePreset({
         },
         box: {
           value: {
-            base: LightTheme.radius.box.value,
+            base: defaultTheme.radius.box.value,
             _dark: darkTheme.radius.box.value,
             _osDark: prefersDarkTheme.radius.box.value,
             _synthwaveTheme: synthwave.radius.box.value,
@@ -325,7 +328,7 @@ export default definePreset({
         },
         size: {
           value: {
-            base: LightTheme.size.selector.value,
+            base: defaultTheme.size.selector.value,
             _dark: darkTheme.size.selector.value,
             _osDark: prefersDarkTheme.size.selector.value,
             _synthwaveTheme: synthwave.size.selector.value,
@@ -333,35 +336,17 @@ export default definePreset({
 
           field: {
             value: {
-              base: LightTheme.size.field.value,
+              base: defaultTheme.size.field.value,
               _dark: darkTheme.size.field.value,
               _osDark: prefersDarkTheme.size.field.value,
               _synthwaveTheme: synthwave.size.field.value,
             },
           },
         },
-        border: {
-          width: {
-            value: {
-              base: LightTheme.border.value,
-              _dark: darkTheme.border.value,
-              _osDark: prefersDarkTheme.border.value,
-              _synthwaveTheme: synthwave.border.value,
-            },
-          },
-          default: {
-            value: {
-              // Daisy UI uses base-300 for border color
-              base: `${LightTheme.border.value} solid ${LightTheme.base[300].value}`,
-              _dark: `${darkTheme.border.value} solid ${darkTheme.base[300].value}`,
-              _osDark: `${prefersDarkTheme.border.value} solid ${prefersDarkTheme.base[300].value}`,
-              _synthwaveTheme: `${synthwave.border.value} solid ${synthwave.base[300].value}`,
-            },
-          },
-        },
+
         depth: {
           value: {
-            base: LightTheme.depth.value,
+            base: defaultTheme.depth.value,
             _dark: darkTheme.depth.value,
             _osDark: prefersDarkTheme.depth.value,
             _synthwaveTheme: synthwave.depth.value,
@@ -369,10 +354,33 @@ export default definePreset({
         },
         noise: {
           value: {
-            base: LightTheme.noise.value,
+            base: defaultTheme.noise.value,
             _dark: darkTheme.noise.value,
             _osDark: prefersDarkTheme.noise.value,
             _synthwaveTheme: synthwave.noise.value,
+          },
+        },
+      },
+      sizes: {
+        border: {
+          width: {
+            value: {
+              base: defaultTheme.border.value,
+              _dark: darkTheme.border.value,
+              _osDark: prefersDarkTheme.border.value,
+              _synthwaveTheme: synthwave.border.value,
+            },
+          },
+        },
+      },
+      borders: {
+        default: {
+          value: {
+            // Daisy UI uses base-300 for border color
+            base: `${defaultTheme.border.value} solid ${LightTheme.base[300].value}`,
+            _dark: `${darkTheme.border.value} solid ${darkTheme.base[300].value}`,
+            _osDark: `${prefersDarkTheme.border.value} solid ${prefersDarkTheme.base[300].value}`,
+            _synthwaveTheme: `${synthwave.border.value} solid ${synthwave.base[300].value}`,
           },
         },
       },
