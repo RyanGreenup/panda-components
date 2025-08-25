@@ -2,6 +2,7 @@ import { styled } from "../../../styled-system/jsx";
 import { css } from "../../../styled-system/css";
 import { createUniqueId } from "solid-js";
 import { useKeybinding, createKeybinding } from "./hooks/useKeybinding";
+import { center } from "../../../styled-system/patterns";
 
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
@@ -357,7 +358,7 @@ export default function Layout() {
       <NavbarToggle type="checkbox" id={navbarId} data-peer="navbar" />
       <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
       <Navbar>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <div class={center({ gap: "1rem" })}>
           <DrawerToggleButton drawerId={drawerId} />
           <NavBrand>Panda Components</NavBrand>
         </div>
