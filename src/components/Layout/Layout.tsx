@@ -1,11 +1,20 @@
-import { For } from "solid-js";
+import { For, createEffect } from "solid-js";
 import { styled } from "../../../styled-system/jsx";
 import { center } from "../../../styled-system/patterns";
 import { createKeybinding, useKeybinding } from "./hooks/useKeybinding";
+import { useResizeHandle } from "./hooks/useResizeHandle";
 
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
-const SidebarWidth = "20rem"; // 320px - wider for desktop sidebar
+const SidebarWidth = "20rem"; // 20rem 320px - wider for desktop sidebar
+export const SidebarWidthPx = 320;
+const sidebarWidthVar = "--sidebar-width";
+const sidebarWidthVarWrapped = `var(${sidebarWidthVar}, 20rem)`;
+const ResizeHandleWidth = "8px"; // Standard resize handle width
+const ScrollbarWidth = "8px"; // Standard scrollbar width
+const zIndices = {
+  resizeHandle: 20,
+};
 /**
  * Consistent Animation System - All transitions in one place for maintainability
  */
@@ -198,7 +207,10 @@ const Sidebar = styled("div", {
   base: {
     ...drawerElementBase,
     position: "fixed", // Keep fixed positioning
-    width: SidebarWidth,
+    width: {
+      base: SidebarWidth,
+      lg: sidebarWidthVarWrapped, // Use CSS variable on desktop
+    },
     backgroundColor: "base.200",
     borderRight: "default",
     boxShadow: {
@@ -213,6 +225,13 @@ const Sidebar = styled("div", {
     ...drawerVisibilityStates,
     "[data-peer=drawer]:checked ~ &": {
       transform: "translateX(0)",
+    },
+    // Conditional transitions
+    "&[data-resizing=true]": {
+      transition: "transform 0.3s ease, bottom 0.3s ease", // Keep transform and bottom, remove width during resize
+    },
+    "&:not([data-resizing=true])": {
+      transition: "transform 0.3s ease, width 0.2s ease, bottom 0.3s ease", // All transitions when not resizing
     },
   },
 });
@@ -302,6 +321,10 @@ const BottomNavButton = styled("label", {
 const SidebarContent = styled("div", {
   base: {
     padding: "6",
+    mr: {
+      base: "0", // Full width on mobile
+      lg: ResizeHandleWidth, // Leave space for resize handle on desktop
+    },
     height: "full",
     overflow: "auto",
   },
@@ -334,8 +357,12 @@ const MainContent = styled("div", {
     // On desktop: adjust for visible sidebar
     lg: {
       "[data-peer=drawer]:checked ~ &": {
-        left: SidebarWidth,
+        left: sidebarWidthVarWrapped,
       },
+    },
+    // Disable transitions when resizing
+    "&[data-resizing=true]": {
+      transition: "none",
     },
   },
 });
@@ -403,6 +430,51 @@ const DrawerToggleButton = (props: { drawerId: string }) => (
   </BottomDrawerButton>
 );
 
+const ResizeHandle = styled("div", {
+  base: {
+    position: "absolute",
+    top: "0",
+    right: "0",
+    width: ResizeHandleWidth,
+    height: "full",
+    cursor: "col-resize",
+    backgroundColor: "transparent",
+    display: {
+      base: "none", // Hidden on mobile
+      lg: "block", // Only show on desktop
+    },
+    transition: "background-color 0.2s ease",
+    zIndex: zIndices.resizeHandle, // Above content
+    _hover: {
+      backgroundColor: "base.200",
+      "&::before": {
+        opacity: "1",
+        backgroundColor: "primary",
+        animation: "pulse 1s infinite",
+        transform: "translate(-50%, -50%) scale(3)",
+      },
+    },
+    _active: {
+      backgroundColor: "base.300",
+    },
+    // Resize Pill
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      borderRadius: "full",
+      opacity: "0.3",
+      transition: "opacity 0.2s ease, transform 0.3s ease-in-out",
+      pointerEvents: "none",
+      backgroundColor: "base.content",
+      width: "0.2rem",
+      height: "2rem",
+    },
+  },
+});
+
 interface LayoutProps {
   children?: any;
 }
@@ -425,6 +497,9 @@ export default function Layout(props: LayoutProps) {
   let drawerRef!: HTMLInputElement;
   let navbarRef!: HTMLInputElement;
   let bottomDashRef!: HTMLInputElement;
+  let sidebarRef!: HTMLDivElement;
+  let mainContentRef!: HTMLDivElement;
+  const SidebarDelta = 100;
 
   const toggleDrawer = () => {
     drawerRef.checked = !drawerRef.checked;
@@ -442,11 +517,58 @@ export default function Layout(props: LayoutProps) {
     bottomDashRef.checked = !bottomDashRef.checked;
   };
 
+  // Resize handle functionality
+  const { width, isResizing, handleMouseDown, setWidth } = useResizeHandle({
+    initialWidth: SidebarWidthPx,
+    minWidth: 200,
+    maxWidth: 600,
+  });
+
+  // Keyboard resize functions
+  const increaseSidebarWidth = () => {
+    const currentWidth = width();
+    const newWidth = Math.min(600, currentWidth + SidebarDelta); // Increase by 20px, max 600px
+    setWidth(newWidth);
+  };
+
+  const decreaseSidebarWidth = () => {
+    const currentWidth = width();
+    const newWidth = Math.max(200, currentWidth - SidebarDelta); // Decrease by 20px, min 200px
+    setWidth(newWidth);
+  };
+
+  const resetSidebarWidth = () => {
+    setWidth(SidebarWidthPx); // Reset to default width
+  };
+
+  // Update CSS variable when width changes
+  createEffect(() => {
+    const widthValue = `${width()}px`;
+    document.documentElement.style.setProperty(sidebarWidthVar, widthValue);
+
+    // Toggle data attribute on sidebar and main content to control transitions
+    const resizingValue = isResizing().toString();
+    if (sidebarRef) {
+      sidebarRef.setAttribute("data-resizing", resizingValue);
+    }
+    if (mainContentRef) {
+      mainContentRef.setAttribute("data-resizing", resizingValue);
+    }
+  });
+
   // Global keybindings
   useKeybinding(createKeybinding("b", { ctrlKey: true }), toggleDrawer);
   useKeybinding(createKeybinding("Escape"), closeDrawer);
   useKeybinding(createKeybinding("m", { ctrlKey: true }), toggleNavbar);
   useKeybinding(createKeybinding("d", { altKey: true }), toggleBottomDash);
+
+  // Sidebar resize keybindings
+  useKeybinding(createKeybinding("]", { ctrlKey: true }), increaseSidebarWidth);
+  useKeybinding(createKeybinding("[", { ctrlKey: true }), decreaseSidebarWidth);
+  useKeybinding(
+    createKeybinding("0", { ctrlKey: true, shiftKey: true }),
+    resetSidebarWidth,
+  );
 
   return (
     <div>
@@ -476,7 +598,7 @@ export default function Layout(props: LayoutProps) {
       </Navbar>
 
       <Overlay onClick={closeDrawer} />
-      <Sidebar>
+      <Sidebar ref={sidebarRef}>
         <SidebarContent>
           <SidebarHeader>Menu</SidebarHeader>
           <SidebarNav>
@@ -494,9 +616,10 @@ export default function Layout(props: LayoutProps) {
             <DummySidebarContent />
           </SidebarNav>
         </SidebarContent>
+        <ResizeHandle onMouseDown={handleMouseDown} />
       </Sidebar>
 
-      <MainContent>{props.children}</MainContent>
+      <MainContent ref={mainContentRef}>{props.children}</MainContent>
 
       <BottomDash>
         <BottomNavLink href="/">Home</BottomNavLink>
