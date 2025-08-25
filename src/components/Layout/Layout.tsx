@@ -6,7 +6,6 @@ import { createKeybinding, useKeybinding } from "./hooks/useKeybinding";
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
 const SidebarWidth = "20rem"; // 320px - wider for desktop sidebar
-const ResizeHandleWidth = "1rem";
 /**
  * Consistent Animation System - All transitions in one place for maintainability
  */
@@ -390,35 +389,6 @@ const SidebarNavButton = styled("label", {
     _hover: {
       backgroundColor: "base.200",
       color: "primary",
-    },
-  },
-});
-
-const ResizeHandle = styled("div", {
-  base: {
-    position: "absolute",
-    top: "0",
-    right: "0",
-    width: "20px",
-    height: "full",
-    cursor: "col-resize",
-    transition: transitions.strings.interactiveAll,
-    display: {
-      base: "none", // Hidden on mobile (drawer mode)
-      lg: "block", // Visible on desktop (sidebar mode)
-    },
-    borderRight: "2px solid transparent",
-    backgroundColor: "base.300",
-    _hover: {
-      backgroundColor: "base.300",
-      borderRightColor: "primary",
-      _before: {
-        backgroundColor: "primary",
-      },
-    },
-    _active: {
-      backgroundColor: "primary",
-      borderRightColor: "primary",
     },
   },
 });
