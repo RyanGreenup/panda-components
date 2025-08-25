@@ -26,6 +26,9 @@ const drawerElementBase = {
     sm: "0",
   },
   transition: "all 0.3s ease",
+  "[data-peer=navbar]:checked ~ &": {
+    top: "0",
+  },
 } as const;
 
 /**
@@ -49,6 +52,10 @@ const Navbar = styled("nav", {
     backgroundColor: "base.200",
     borderBottom: "default",
     boxShadow: "sm",
+    transition: "transform 0.3s ease",
+    "[data-peer=navbar]:checked ~ &": {
+      transform: "translateY(-100%)",
+    },
   },
 });
 
@@ -82,6 +89,12 @@ const NavLink = styled("a", {
 });
 
 const DrawerToggle = styled("input", {
+  base: {
+    display: "none",
+  },
+});
+
+const NavbarToggle = styled("input", {
   base: {
     display: "none",
   },
@@ -219,6 +232,25 @@ const BottomDrawerButton = styled("label", {
   },
 });
 
+const BottomNavButton = styled("label", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "base.content",
+    fontSize: "sm",
+    fontWeight: "medium",
+    padding: "2",
+    borderRadius: "md",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    _hover: {
+      color: "primary",
+      backgroundColor: "base.300",
+    },
+  },
+});
+
 const DrawerContent = styled("div", {
   base: {
     padding: "6",
@@ -262,6 +294,24 @@ const DrawerNavLink = styled("a", {
   },
 });
 
+const DrawerNavButton = styled("label", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    color: "base.content",
+    fontSize: "md",
+    fontWeight: "medium",
+    padding: "3",
+    borderRadius: "md",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    _hover: {
+      backgroundColor: "base.200",
+      color: "primary",
+    },
+  },
+});
+
 const DrawerToggleButton = (props: { drawerId: string }) => (
   <BottomDrawerButton for={props.drawerId}>
     <HamburgerIcon>
@@ -274,6 +324,7 @@ const DrawerToggleButton = (props: { drawerId: string }) => (
 
 export default function Layout() {
   const drawerId = createUniqueId();
+  const navbarId = createUniqueId();
 
   const toggleDrawer = () => {
     const drawerToggle = document.getElementById(drawerId) as HTMLInputElement;
@@ -289,12 +340,21 @@ export default function Layout() {
     }
   };
 
+  const toggleNavbar = () => {
+    const navbarToggle = document.getElementById(navbarId) as HTMLInputElement;
+    if (navbarToggle) {
+      navbarToggle.checked = !navbarToggle.checked;
+    }
+  };
+
   // Global keybindings
   useKeybinding(createKeybinding("b", { ctrlKey: true }), toggleDrawer);
   useKeybinding(createKeybinding("Escape"), closeDrawer);
+  useKeybinding(createKeybinding("n", { ctrlKey: true }), toggleNavbar);
 
   return (
     <div>
+      <NavbarToggle type="checkbox" id={navbarId} data-peer="navbar" />
       <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
       <Navbar>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
@@ -318,6 +378,7 @@ export default function Layout() {
             <DrawerNavLink href="/components">Components</DrawerNavLink>
             <DrawerNavLink href="/examples">Examples</DrawerNavLink>
             <DrawerNavLink href="/about">About</DrawerNavLink>
+            <DrawerNavButton for={navbarId}>Toggle Navbar</DrawerNavButton>
           </DrawerNav>
         </DrawerContent>
       </Drawer>
@@ -327,6 +388,7 @@ export default function Layout() {
         <BottomNavLink href="/docs">Docs</BottomNavLink>
         <BottomNavLink href="/components">Components</BottomNavLink>
         <BottomNavLink href="/examples">Examples</BottomNavLink>
+        <BottomNavButton for={navbarId}>Nav</BottomNavButton>
         <DrawerToggleButton drawerId={drawerId} />
       </BottomDash>
     </div>
