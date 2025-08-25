@@ -2,6 +2,8 @@
   "name": "example-with-mdx",
   "type": "module",
   "scripts": {
+    "prepare": "panda codegen",
+    "prepare-clean": "panda codegen --clean",
     "dev": "vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start"
@@ -12,10 +14,13 @@
     "@solidjs/start": "^1.1.0",
     "@vinxi/plugin-mdx": "^3.7.1",
     "solid-js": "^1.9.5",
-    "vinxi": "^0.5.7",
-    "solid-mdx": "^0.0.7"
+    "solid-mdx": "^0.0.7",
+    "vinxi": "^0.5.7"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "@pandacss/dev": "^1.1.0"
   }
 }
