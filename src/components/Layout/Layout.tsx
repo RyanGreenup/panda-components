@@ -1,10 +1,10 @@
 import { styled } from "../../../styled-system/jsx";
 import { createUniqueId } from "solid-js";
+import { useKeybinding, createKeybinding } from "./hooks/useKeybinding";
 
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
 const DrawerWidth = "80";
-const DrawerHeight = `calc(100dvh - ${NavbarHeight})`;
 /**
  * Consistent Animation to ensure everything moves in lockstep
  */
@@ -241,12 +241,23 @@ const DrawerNavLink = styled("a", {
 export default function Layout() {
   const drawerId = createUniqueId();
 
+  const toggleDrawer = () => {
+    const drawerToggle = document.getElementById(drawerId) as HTMLInputElement;
+    if (drawerToggle) {
+      drawerToggle.checked = !drawerToggle.checked;
+    }
+  };
+
   const closeDrawer = () => {
     const drawerToggle = document.getElementById(drawerId) as HTMLInputElement;
     if (drawerToggle) {
       drawerToggle.checked = false;
     }
   };
+
+  // Global keybindings
+  useKeybinding(createKeybinding("b", { ctrlKey: true }), toggleDrawer);
+  useKeybinding(createKeybinding("Escape"), closeDrawer);
 
   return (
     <div>
