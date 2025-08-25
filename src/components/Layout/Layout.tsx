@@ -1,4 +1,5 @@
 import { styled } from "../../../styled-system/jsx";
+import { css } from "../../../styled-system/css";
 import { createUniqueId } from "solid-js";
 import { useKeybinding, createKeybinding } from "./hooks/useKeybinding";
 
@@ -17,6 +18,27 @@ const translateTransition = {
  * must adjust
  */
 const DrawerHeightSM = `calc(100dvh - ${NavbarHeight} - ${BottomDashHeight})`;
+
+/**
+ * Shared base styles for drawer-related positioned elements
+ */
+const drawerElementBase = {
+  position: "fixed",
+  top: NavbarHeight,
+  left: "0",
+  bottom: {
+    base: BottomDashHeight,
+    sm: "0",
+  },
+  transition: "all 0.3s ease",
+} as const;
+
+/**
+ * Shared styles for drawer visibility states
+ */
+const drawerVisibilityStates = {
+  "[data-peer=drawer]:checked ~ &": {},
+} as const;
 
 const Navbar = styled("nav", {
   base: {
@@ -114,20 +136,14 @@ const HamburgerIcon = styled("div", {
 
 const Overlay = styled("div", {
   base: {
-    position: "fixed",
-    top: NavbarHeight,
-    left: "0",
+    ...drawerElementBase,
     right: "0",
-    bottom: {
-      base: BottomDashHeight,
-      sm: "0",
-    },
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: "40",
     opacity: "0",
     visibility: "hidden",
     cursor: "pointer",
-    transition: "all 0.3s ease",
+    ...drawerVisibilityStates,
     "[data-peer=drawer]:checked ~ &": {
       opacity: "1",
       visibility: "visible",
@@ -137,20 +153,14 @@ const Overlay = styled("div", {
 
 const Drawer = styled("div", {
   base: {
-    position: "fixed",
-    top: NavbarHeight,
-    left: "0",
-    bottom: {
-      base: BottomDashHeight,
-      sm: "0",
-    },
+    ...drawerElementBase,
     width: DrawerWidth,
     backgroundColor: "base.100",
     borderRight: "default",
     boxShadow: "lg",
     zIndex: "50",
     transform: "translateX(-100%)",
-    transition: "all 0.3s ease",
+    ...drawerVisibilityStates,
     "[data-peer=drawer]:checked ~ &": {
       transform: "translateX(0)",
     },
