@@ -126,6 +126,7 @@ const Overlay = styled("div", {
     zIndex: "40",
     opacity: "0",
     visibility: "hidden",
+    cursor: "pointer",
     transition: "all 0.3s ease",
     "[data-peer=drawer]:checked ~ &": {
       opacity: "1",
@@ -240,6 +241,13 @@ const DrawerNavLink = styled("a", {
 export default function Layout() {
   const drawerId = createUniqueId();
 
+  const closeDrawer = () => {
+    const drawerToggle = document.getElementById(drawerId) as HTMLInputElement;
+    if (drawerToggle) {
+      drawerToggle.checked = false;
+    }
+  };
+
   return (
     <div>
       <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
@@ -261,7 +269,7 @@ export default function Layout() {
         </NavLinks>
       </Navbar>
 
-      <Overlay />
+      <Overlay onClick={closeDrawer} />
       <Drawer>
         <DrawerContent>
           <DrawerHeader>Menu</DrawerHeader>
