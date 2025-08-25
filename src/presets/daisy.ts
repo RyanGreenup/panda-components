@@ -1,14 +1,13 @@
 import { definePreset } from "@pandacss/dev";
 import pandaPreset from "@pandacss/preset-panda";
 import dracula from "./themes/dracula";
-import synthwave from "./themes/synthwave";
 import LightTheme from "./themes/light";
 import night from "./themes/night";
-import corporate from "./themes/corporate";
+import synthwave from "./themes/synthwave";
 
 const prefersDarkTheme = dracula;
 const darkTheme = night;
-const defaultTheme = corporate;
+const defaultTheme = LightTheme;
 
 // TODO favor data-theme over prefers-color-scheme
 
@@ -303,6 +302,7 @@ export default definePreset({
           },
         },
       },
+
       radii: {
         selector: {
           value: {
@@ -328,12 +328,28 @@ export default definePreset({
             _synthwaveTheme: synthwave.radius.box.value,
           },
         },
-        size: {
-          value: {
-            base: defaultTheme.size.selector.value,
-            _dark: darkTheme.size.selector.value,
-            _osDark: prefersDarkTheme.size.selector.value,
-            _synthwaveTheme: synthwave.size.selector.value,
+        sizes: {
+          selector: {
+            value: {
+              base: defaultTheme.size.selector.value,
+              _dark: darkTheme.size.selector.value,
+              _osDark: prefersDarkTheme.size.selector.value,
+              _synthwaveTheme: synthwave.size.selector.value,
+            },
+          },
+          card: {
+            padding: {
+              value: "1rem",
+            },
+            sm: {
+              value: "0.75rem",
+            },
+            md: {
+              value: "1.25rem",
+            },
+            lg: {
+              value: "1.5rem",
+            },
           },
 
           field: {
@@ -360,18 +376,6 @@ export default definePreset({
             _dark: darkTheme.noise.value,
             _osDark: prefersDarkTheme.noise.value,
             _synthwaveTheme: synthwave.noise.value,
-          },
-        },
-      },
-      sizes: {
-        border: {
-          width: {
-            value: {
-              base: defaultTheme.border.value,
-              _dark: darkTheme.border.value,
-              _osDark: prefersDarkTheme.border.value,
-              _synthwaveTheme: synthwave.border.value,
-            },
           },
         },
       },

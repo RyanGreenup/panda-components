@@ -2,10 +2,21 @@ import Counter from "~/components/Examples/Counter";
 import { CardExample } from "~/components/Examples/Card";
 import { ButtonExample } from "~/components/Examples/Button";
 import { CalloutExample } from "~/components/Examples/Callout";
+import { CollapsibleExample } from "~/components/Examples/Collapsible";
 
 import {Callout} from "~/components/Callout";
+import {Collapsible} from "~/components/Collapsible";
 
 # Solid JS Panda CSS Components
+
+
+###### Collapsible Component
+
+The Collapsible component uses peer selectors for smooth content toggling:
+
+<CollapsibleExample />
+
+
 
 ## Introduction
 
@@ -17,6 +28,7 @@ The docs are in MDX, for example we can include components like a counter:
 
 
 <Counter />
+
 
 ## Components to Refactor into Stories
 
@@ -30,17 +42,24 @@ We are not using Story book as I need exemplars of Solid Start Server Side funct
 
 The Card component provides a flexible container with multiple variants:
 
+<Collapsible title="Example">
 <CardExample />
+</Collapsible>
 
 ### Button Component
 
 The Button component offers multiple variants, sizes, and states:
 
+<Collapsible title="Example">
 <ButtonExample />
+</Collapsible>
+
 
 ### Callout Component
 
 The Callout component provides contextual messages with different severity levels:
 
+<Collapsible title="Example">
 <CalloutExample />
+</Collapsible>
 
