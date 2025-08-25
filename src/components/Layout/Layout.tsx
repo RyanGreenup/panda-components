@@ -8,12 +8,31 @@ const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
 const SidebarWidth = "20rem"; // 320px - wider for desktop sidebar
 /**
- * Consistent Animation to ensure everything moves in lockstep
+ * Consistent Animation System - All transitions in one place for maintainability
  */
-const translateTransition = {
-  bottomDash: "transform 0.3s ease",
-  drawer: "all 0.3s ease",
-};
+const transitions = {
+  // Core layout animations - these should all be in sync
+  layout: {
+    duration: "0.3s",
+    easing: "ease",
+    full: "all 0.3s ease",
+  },
+  // Interactive element animations - faster for better responsiveness  
+  interactive: {
+    duration: "0.2s", 
+    easing: "ease",
+    full: "all 0.2s ease",
+  },
+  // Specific transition strings for convenience
+  strings: {
+    layoutTransform: "transform 0.3s ease",
+    layoutAll: "all 0.3s ease", 
+    interactiveAll: "all 0.2s ease",
+    // Combined transitions for complex elements
+    drawerSlide: "transform 0.3s ease, all 0.3s ease",
+    overlayFade: "all 0.3s ease",
+  }
+} as const;
 
 /**
  * Shared base styles for drawer-related positioned elements
@@ -26,7 +45,7 @@ const drawerElementBase = {
     base: BottomDashHeight,
     sm: "0",
   },
-  transition: "all 0.3s ease",
+  transition: transitions.strings.layoutAll,
   "[data-peer=navbar]:checked ~ &": {
     top: "0",
   },
@@ -53,7 +72,7 @@ const Navbar = styled("nav", {
     backgroundColor: "base.200",
     borderBottom: "default",
     boxShadow: "sm",
-    transition: "transform 0.3s ease",
+    transition: transitions.strings.layoutTransform,
     "[data-peer=navbar]:checked ~ &": {
       transform: "translateY(-100%)",
     },
@@ -82,7 +101,7 @@ const NavLink = styled("a", {
     textDecoration: "none",
     fontSize: "md",
     fontWeight: "medium",
-    transition: "all 0.2s ease",
+    transition: transitions.strings.interactiveAll,
     _hover: {
       color: "primary",
     },
@@ -108,7 +127,7 @@ const DrawerButton = styled("label", {
     cursor: "pointer",
     padding: "2",
     borderRadius: "md",
-    transition: "all 0.2s ease",
+    transition: transitions.strings.interactiveAll,
     _hover: {
       backgroundColor: "base.300",
     },
@@ -127,7 +146,7 @@ const HamburgerIcon = styled("div", {
       height: "0.5",
       backgroundColor: "base.content",
       borderRadius: "sm",
-      transition: "all 0.3s ease",
+      transition: transitions.strings.layoutAll,
     },
     "[data-peer=drawer]:checked ~ * &": {
       "& span:nth-child(1)": {
@@ -204,7 +223,7 @@ const BottomDash = styled("div", {
       base: "translateY(0)",
       sm: "translateY(100%)",
     },
-    transition: translateTransition.bottomDash,
+    transition: transitions.strings.layoutTransform,
   },
 });
 
@@ -216,7 +235,7 @@ const BottomNavLink = styled("a", {
     fontWeight: "medium",
     padding: "2",
     borderRadius: "md",
-    transition: "all 0.2s ease",
+    transition: transitions.strings.interactiveAll,
     _hover: {
       color: "primary",
       backgroundColor: "base.300",
@@ -235,7 +254,7 @@ const BottomDrawerButton = styled("label", {
     padding: "2",
     borderRadius: "md",
     cursor: "pointer",
-    transition: "all 0.2s ease",
+    transition: transitions.strings.interactiveAll,
     _hover: {
       color: "primary",
       backgroundColor: "base.300",
@@ -254,7 +273,7 @@ const BottomNavButton = styled("label", {
     padding: "2",
     borderRadius: "md",
     cursor: "pointer",
-    transition: "all 0.2s ease",
+    transition: transitions.strings.interactiveAll,
     _hover: {
       color: "primary",
       backgroundColor: "base.300",
@@ -282,7 +301,7 @@ const MainContent = styled("div", {
     },
     backgroundColor: "base.100",
     overflow: "auto",
-    transition: "all 0.3s ease",
+    transition: transitions.strings.layoutAll,
     // Adjust for hidden navbar
     "[data-peer=navbar]:checked ~ &": {
       top: "0",
@@ -323,7 +342,7 @@ const SidebarNavLink = styled("a", {
     fontWeight: "medium",
     padding: "3",
     borderRadius: "md",
-    transition: "all 0.2s ease",
+    transition: transitions.strings.interactiveAll,
     _hover: {
       backgroundColor: "base.200",
       color: "primary",
@@ -341,7 +360,7 @@ const SidebarNavButton = styled("label", {
     padding: "3",
     borderRadius: "md",
     cursor: "pointer",
-    transition: "all 0.2s ease",
+    transition: transitions.strings.interactiveAll,
     _hover: {
       backgroundColor: "base.200",
       color: "primary",
