@@ -1,4 +1,6 @@
 import Counter from "~/components/Examples/Counter";
+import { CardExample } from "~/components/Examples/Card";
+import { ButtonExample } from "~/components/Examples/Button";
 
 # Solid JS Panda CSS Components
 
@@ -6,8 +8,27 @@ import Counter from "~/components/Examples/Counter";
 
 
 
-This Library servers as a catalogue of Solid JS applications. The docs are in MDX, for example we can include components like a counter:
+This Library servers as a catalogue of Solid JS applications.
+
+The docs are in MDX, for example we can include components like a counter:
 
 
 <Counter />
+
+## Components to Refactor into Stories
+
+> [!NOTE]
+> We are not using Story book as I need exemplars of Solid Start Server Side functions with `createAsync` (maybe `createResource`), `query` and `Suspense`
+
+### Card Component
+
+The Card component provides a flexible container with multiple variants:
+
+<CardExample />
+
+### Button Component
+
+The Button component offers multiple variants, sizes, and states:
+
+<ButtonExample />
 

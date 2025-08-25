@@ -13,6 +13,7 @@ export default function Counter() {
         rounded: "md",
         borderWidth: "medium",
         borderColor: "base.300",
+        border: "{border.default}",
         width: "md",
         p: 4,
         m: 4,
@@ -31,6 +32,7 @@ export default function Counter() {
               px: 4,
               py: 2,
               rounded: "lg",
+              color: "content.primary",
             })}
             onClick={() => setCount(count() + 1)}
           >
