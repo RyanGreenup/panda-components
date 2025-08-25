@@ -17,16 +17,16 @@ const transitions = {
     easing: "ease",
     full: "all 0.3s ease",
   },
-  // Interactive element animations - faster for better responsiveness  
+  // Interactive element animations - faster for better responsiveness
   interactive: {
-    duration: "0.2s", 
+    duration: "0.2s",
     easing: "ease",
     full: "all 0.2s ease",
   },
   // Specific transition strings for convenience
   strings: {
     layoutTransform: "transform 0.3s ease",
-    layoutAll: "all 0.3s ease", 
+    layoutAll: "all 0.3s ease",
     interactiveAll: "all 0.2s ease",
     // Combined transitions for complex elements
     drawerSlide: "transform 0.3s ease, all 0.3s ease",
@@ -48,6 +48,12 @@ const drawerElementBase = {
   transition: transitions.strings.layoutAll,
   "[data-peer=navbar]:checked ~ &": {
     top: "0",
+  },
+  "[data-peer=bottomdash]:checked ~ &": {
+    bottom: {
+      base: "0",
+      sm: "0",
+    },
   },
 } as const;
 
@@ -115,6 +121,12 @@ const DrawerToggle = styled("input", {
 });
 
 const NavbarToggle = styled("input", {
+  base: {
+    display: "none",
+  },
+});
+
+const BottomDashToggle = styled("input", {
   base: {
     display: "none",
   },
@@ -224,6 +236,12 @@ const BottomDash = styled("div", {
       sm: "translateY(100%)",
     },
     transition: transitions.strings.layoutTransform,
+    "[data-peer=bottomdash]:checked ~ &": {
+      transform: {
+        base: "translateY(100%)",
+        sm: "translateY(100%)",
+      },
+    },
   },
 });
 
@@ -306,6 +324,13 @@ const MainContent = styled("div", {
     "[data-peer=navbar]:checked ~ &": {
       top: "0",
     },
+    // Adjust for hidden bottom dash - extends to full height on mobile
+    "[data-peer=bottomdash]:checked ~ &": {
+      bottom: {
+        base: "0",
+        sm: "0",
+      },
+    },
     // On desktop: adjust for visible sidebar
     lg: {
       "[data-peer=drawer]:checked ~ &": {
@@ -385,6 +410,7 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
   const drawerId = createUniqueId();
   const navbarId = createUniqueId();
+  const bottomDashId = createUniqueId();
 
   const toggleDrawer = () => {
     const drawerToggle = document.getElementById(drawerId) as HTMLInputElement;
@@ -407,14 +433,23 @@ export default function Layout(props: LayoutProps) {
     }
   };
 
+  const toggleBottomDash = () => {
+    const bottomDashToggle = document.getElementById(bottomDashId) as HTMLInputElement;
+    if (bottomDashToggle) {
+      bottomDashToggle.checked = !bottomDashToggle.checked;
+    }
+  };
+
   // Global keybindings
   useKeybinding(createKeybinding("b", { ctrlKey: true }), toggleDrawer);
   useKeybinding(createKeybinding("Escape"), closeDrawer);
   useKeybinding(createKeybinding("m", { ctrlKey: true }), toggleNavbar);
+  useKeybinding(createKeybinding("d", { altKey: true }), toggleBottomDash);
 
   return (
     <div>
       <NavbarToggle type="checkbox" id={navbarId} data-peer="navbar" />
+      <BottomDashToggle type="checkbox" id={bottomDashId} data-peer="bottomdash" />
       <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
       <Navbar>
         <div class={center({ gap: "1rem" })}>
@@ -439,6 +474,7 @@ export default function Layout(props: LayoutProps) {
             <SidebarNavLink href="/examples">Examples</SidebarNavLink>
             <SidebarNavLink href="/about">About</SidebarNavLink>
             <SidebarNavButton for={navbarId}>Toggle Navbar</SidebarNavButton>
+            <SidebarNavButton for={bottomDashId}>Toggle Bottom Dash</SidebarNavButton>
           </SidebarNav>
         </SidebarContent>
       </Sidebar>
