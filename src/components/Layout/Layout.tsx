@@ -13,11 +13,6 @@ const translateTransition = {
   bottomDash: "transform 0.3s ease",
   drawer: "all 0.3s ease",
 };
-/**
- * Drawer Height on Small Displays. On Small Displays the dash is visible so it
- * must adjust
- */
-const DrawerHeightSM = `calc(100dvh - ${NavbarHeight} - ${BottomDashHeight})`;
 
 /**
  * Shared base styles for drawer-related positioned elements
