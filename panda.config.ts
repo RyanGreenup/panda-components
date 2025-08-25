@@ -1,4 +1,7 @@
 import { defineConfig } from "@pandacss/dev";
+import MyPreset from "./src/presets/daisy";
+import pandaPreset from "@pandacss/preset-panda";
+import { articleRecipe } from "~/recipes/article.recipe";
 
 export default defineConfig({
   // Whether to use css reset
@@ -16,10 +19,15 @@ export default defineConfig({
 
   // Files to exclude
   exclude: [],
+  presets: [MyPreset, pandaPreset],
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      recipes: {
+        article: articleRecipe,
+      },
+    },
   },
 
   // The output directory for your css system
