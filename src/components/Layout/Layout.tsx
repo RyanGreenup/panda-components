@@ -200,6 +200,25 @@ const BottomNavLink = styled("a", {
   },
 });
 
+const BottomDrawerButton = styled("label", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "base.content",
+    fontSize: "sm",
+    fontWeight: "medium",
+    padding: "2",
+    borderRadius: "md",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    _hover: {
+      color: "primary",
+      backgroundColor: "base.300",
+    },
+  },
+});
+
 const DrawerContent = styled("div", {
   base: {
     padding: "6",
@@ -304,6 +323,13 @@ export default function Layout() {
         <BottomNavLink href="/docs">Docs</BottomNavLink>
         <BottomNavLink href="/components">Components</BottomNavLink>
         <BottomNavLink href="/examples">Examples</BottomNavLink>
+        <BottomDrawerButton for={drawerId}>
+          <HamburgerIcon>
+            <span></span>
+            <span></span>
+            <span></span>
+          </HamburgerIcon>
+        </BottomDrawerButton>
       </BottomDash>
     </div>
   );
