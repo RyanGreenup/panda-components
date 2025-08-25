@@ -301,6 +301,29 @@ export default definePreset({
             },
           },
         },
+        dev: {
+          1: {
+            value: "bg.blue.600/50",
+          },
+          2: {
+            value: "bg.red.600/50",
+          },
+          3: {
+            value: "bg.green.600/50",
+          },
+          4: {
+            value: "bg.purple.600/50",
+          },
+          5: {
+            value: "bg.orange.600/50",
+          },
+          6: {
+            value: "bg.pink.600/50",
+          },
+          7: {
+            value: "bg.yellow.600/50",
+          },
+        },
       },
 
       radii: {

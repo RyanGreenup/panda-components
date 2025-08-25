@@ -6,10 +6,8 @@ import "./app.css";
 export default function App() {
   return (
     <Router
-      root={props => (
+      root={(props) => (
         <main>
-          <a href="/">Index</a>
-          <a href="/about">About</a>
           <Suspense>{props.children}</Suspense>
         </main>
       )}

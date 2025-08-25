@@ -1,19 +1,227 @@
-import { css } from "../../../styled-system/css";
-import { Center } from "../../../styled-system/jsx";
-import { circle } from "../../../styled-system/patterns";
+import { styled } from "../../../styled-system/jsx";
+import { createUniqueId } from "solid-js";
+
+const NavbarHeight = "4rem";
+const DrawerHeight = `calc(100dvh - ${NavbarHeight})`;
+const BottomDashHeight = "4rem";
+// was 80=20rem,
+const DrawerWidth = "80";
+// const DrawerHeight = `50dvh`;
+
+const Navbar = styled("nav", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "full",
+    height: {
+      base: NavbarHeight,
+    },
+    paddingX: "4",
+    paddingY: "3",
+    backgroundColor: "base.200",
+    borderBottom: "default",
+    boxShadow: "sm",
+  },
+});
+
+const NavBrand = styled("div", {
+  base: {
+    fontSize: "lg",
+    fontWeight: "bold",
+    color: "base.content",
+  },
+});
+
+const NavLinks = styled("div", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    gap: "6",
+  },
+});
+
+const NavLink = styled("a", {
+  base: {
+    color: "base.content",
+    textDecoration: "none",
+    fontSize: "md",
+    fontWeight: "medium",
+    transition: "all 0.2s ease",
+    _hover: {
+      color: "primary",
+    },
+  },
+});
+
+const DrawerToggle = styled("input", {
+  base: {
+    display: "none",
+  },
+});
+
+const DrawerButton = styled("label", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
+    padding: "2",
+    borderRadius: "md",
+    transition: "all 0.2s ease",
+    _hover: {
+      backgroundColor: "base.300",
+    },
+  },
+});
+
+const HamburgerIcon = styled("div", {
+  base: {
+    width: "6",
+    height: "6",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    "& span": {
+      width: "full",
+      height: "0.5",
+      backgroundColor: "base.content",
+      borderRadius: "sm",
+      transition: "all 0.3s ease",
+    },
+    "[data-peer=drawer]:checked ~ * &": {
+      "& span:nth-child(1)": {
+        transform: "rotate(45deg) translate(5px, 5px)",
+      },
+      "& span:nth-child(2)": {
+        opacity: "0",
+      },
+      "& span:nth-child(3)": {
+        transform: "rotate(-45deg) translate(7px, -6px)",
+      },
+    },
+  },
+});
+
+const Overlay = styled("div", {
+  base: {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    mt: NavbarHeight,
+    width: "full",
+    height: DrawerHeight,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: "40",
+    opacity: "0",
+    visibility: "hidden",
+    transition: "all 0.3s ease",
+    "[data-peer=drawer]:checked ~ &": {
+      opacity: "1",
+      visibility: "visible",
+    },
+  },
+});
+
+const Drawer = styled("div", {
+  base: {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    mt: NavbarHeight,
+    height: DrawerHeight,
+    width: DrawerWidth,
+    backgroundColor: "base.100",
+    borderRight: "default",
+    boxShadow: "lg",
+    zIndex: "50",
+    transform: "translateX(-100%)",
+    transition: "transform 0.3s ease",
+    "[data-peer=drawer]:checked ~ &": {
+      transform: "translateX(0)",
+    },
+  },
+});
+
+const DrawerContent = styled("div", {
+  base: {
+    padding: "6",
+    height: "full",
+    overflow: "auto",
+  },
+});
+
+const DrawerHeader = styled("div", {
+  base: {
+    fontSize: "xl",
+    fontWeight: "bold",
+    color: "base.content",
+    marginBottom: "6",
+    paddingBottom: "4",
+    borderBottom: "default",
+  },
+});
+
+const DrawerNav = styled("nav", {
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "2",
+  },
+});
+
+const DrawerNavLink = styled("a", {
+  base: {
+    color: "base.content",
+    textDecoration: "none",
+    fontSize: "md",
+    fontWeight: "medium",
+    padding: "3",
+    borderRadius: "md",
+    transition: "all 0.2s ease",
+    _hover: {
+      backgroundColor: "base.200",
+      color: "primary",
+    },
+  },
+});
 
 export default function Layout() {
+  const drawerId = createUniqueId();
+
   return (
-    <Center class={css({ m: "5000rem" })}>
-      <div
-        class={circle({
-          bg: "primary",
-          color: "content.primary",
-          animation: "bounce",
-          width: "5",
-          height: "5",
-        })}
-      ></div>
-    </Center>
+    <div>
+      <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
+      <Navbar>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <DrawerButton for={drawerId}>
+            <HamburgerIcon>
+              <span></span>
+              <span></span>
+              <span></span>
+            </HamburgerIcon>
+          </DrawerButton>
+          <NavBrand>Panda Components</NavBrand>
+        </div>
+        <NavLinks>
+          <NavLink href="/">Home</NavLink>
+          <NavLink href="/docs">Docs</NavLink>
+          <NavLink href="/components">Components</NavLink>
+        </NavLinks>
+      </Navbar>
+
+      <Overlay />
+      <Drawer>
+        <DrawerContent>
+          <DrawerHeader>Menu</DrawerHeader>
+          <DrawerNav>
+            <DrawerNavLink href="/">Home</DrawerNavLink>
+            <DrawerNavLink href="/docs">Documentation</DrawerNavLink>
+            <DrawerNavLink href="/components">Components</DrawerNavLink>
+            <DrawerNavLink href="/examples">Examples</DrawerNavLink>
+            <DrawerNavLink href="/about">About</DrawerNavLink>
+          </DrawerNav>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 }
