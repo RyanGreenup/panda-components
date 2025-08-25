@@ -14,9 +14,10 @@ const StyledCard = styled("div", {
   variants: {
     variant: {
       default: {
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-        _hover: {
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+        boxShadow: {
+          base: "0 2px 8px rgba(0, 0, 0, 0.1)",
+          // _hover: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          _hover: "0 6px 16px rgba(0, 0, 0, 0.2)",
         },
       },
       bordered: {
