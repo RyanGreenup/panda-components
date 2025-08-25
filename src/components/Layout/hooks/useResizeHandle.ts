@@ -1,4 +1,5 @@
-import { createSignal, createEffect, onCleanup } from "solid-js";
+import { createSignal, onCleanup } from "solid-js";
+import { isServer } from "solid-js/web";
 import { SidebarWidthPx } from "../Layout";
 
 export interface UseResizeHandleOptions {
@@ -27,6 +28,8 @@ export function useResizeHandle(options: UseResizeHandleOptions = {}) {
   let startWidth = 0;
 
   const handleMouseDown = (e: MouseEvent) => {
+    if (isServer) return;
+    
     e.preventDefault();
     setIsResizing(true);
     startX = e.clientX;
@@ -51,6 +54,8 @@ export function useResizeHandle(options: UseResizeHandleOptions = {}) {
   };
 
   const handleMouseUp = () => {
+    if (isServer) return;
+    
     setIsResizing(false);
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
@@ -62,6 +67,8 @@ export function useResizeHandle(options: UseResizeHandleOptions = {}) {
 
   // Cleanup on component unmount
   onCleanup(() => {
+    if (isServer) return;
+    
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
     document.body.style.cursor = "";

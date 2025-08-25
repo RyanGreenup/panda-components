@@ -1,4 +1,4 @@
-import { For, createEffect } from "solid-js";
+import { For, createEffect, onMount } from "solid-js";
 import { styled } from "../../../styled-system/jsx";
 import { center } from "../../../styled-system/patterns";
 import { createKeybinding, useKeybinding } from "./hooks/useKeybinding";
@@ -231,7 +231,8 @@ const Sidebar = styled("div", {
       transition: "transform 0.3s ease, top 0.3s ease, bottom 0.3s ease", // Keep transform, top and bottom, remove width during resize
     },
     "&:not([data-resizing=true])": {
-      transition: "transform 0.3s ease, width 0.2s ease, top 0.3s ease, bottom 0.3s ease", // All transitions when not resizing
+      transition:
+        "transform 0.3s ease, width 0.2s ease, top 0.3s ease, bottom 0.3s ease", // All transitions when not resizing
     },
   },
 });
@@ -517,6 +518,7 @@ export default function Layout(props: LayoutProps) {
     bottomDashRef.checked = !bottomDashRef.checked;
   };
 
+
   // Resize handle functionality
   const { width, isResizing, handleMouseDown, setWidth } = useResizeHandle({
     initialWidth: SidebarWidthPx,
@@ -542,18 +544,20 @@ export default function Layout(props: LayoutProps) {
   };
 
   // Update CSS variable when width changes
-  createEffect(() => {
-    const widthValue = `${width()}px`;
-    document.documentElement.style.setProperty(sidebarWidthVar, widthValue);
+  onMount(() => {
+    createEffect(() => {
+      const widthValue = `${width()}px`;
+      document.documentElement.style.setProperty(sidebarWidthVar, widthValue);
 
-    // Toggle data attribute on sidebar and main content to control transitions
-    const resizingValue = isResizing().toString();
-    if (sidebarRef) {
-      sidebarRef.setAttribute("data-resizing", resizingValue);
-    }
-    if (mainContentRef) {
-      mainContentRef.setAttribute("data-resizing", resizingValue);
-    }
+      // Toggle data attribute on sidebar and main content to control transitions
+      const resizingValue = isResizing().toString();
+      if (sidebarRef) {
+        sidebarRef.setAttribute("data-resizing", resizingValue);
+      }
+      if (mainContentRef) {
+        mainContentRef.setAttribute("data-resizing", resizingValue);
+      }
+    });
   });
 
   // Global keybindings
