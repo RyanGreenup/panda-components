@@ -262,6 +262,16 @@ const DrawerNavLink = styled("a", {
   },
 });
 
+const DrawerToggleButton = (props: { drawerId: string }) => (
+  <BottomDrawerButton for={props.drawerId}>
+    <HamburgerIcon>
+      <span></span>
+      <span></span>
+      <span></span>
+    </HamburgerIcon>
+  </BottomDrawerButton>
+);
+
 export default function Layout() {
   const drawerId = createUniqueId();
 
@@ -288,13 +298,7 @@ export default function Layout() {
       <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
       <Navbar>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <DrawerButton for={drawerId}>
-            <HamburgerIcon>
-              <span></span>
-              <span></span>
-              <span></span>
-            </HamburgerIcon>
-          </DrawerButton>
+          <DrawerToggleButton drawerId={drawerId} />
           <NavBrand>Panda Components</NavBrand>
         </div>
         <NavLinks>
@@ -323,13 +327,7 @@ export default function Layout() {
         <BottomNavLink href="/docs">Docs</BottomNavLink>
         <BottomNavLink href="/components">Components</BottomNavLink>
         <BottomNavLink href="/examples">Examples</BottomNavLink>
-        <BottomDrawerButton for={drawerId}>
-          <HamburgerIcon>
-            <span></span>
-            <span></span>
-            <span></span>
-          </HamburgerIcon>
-        </BottomDrawerButton>
+        <DrawerToggleButton drawerId={drawerId} />
       </BottomDash>
     </div>
   );
