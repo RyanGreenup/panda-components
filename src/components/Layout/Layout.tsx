@@ -6,7 +6,7 @@ import { center } from "../../../styled-system/patterns";
 
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
-const DrawerWidth = "80";
+const SidebarWidth = "20rem"; // 320px - wider for desktop sidebar
 /**
  * Consistent Animation to ensure everything moves in lockstep
  */
@@ -152,6 +152,10 @@ const Overlay = styled("div", {
     opacity: "0",
     visibility: "hidden",
     cursor: "pointer",
+    display: {
+      base: "block", // Mobile: show overlay
+      lg: "none", // Desktop: no overlay needed
+    },
     ...drawerVisibilityStates,
     "[data-peer=drawer]:checked ~ &": {
       opacity: "1",
@@ -160,14 +164,20 @@ const Overlay = styled("div", {
   },
 });
 
-const Drawer = styled("div", {
+const Sidebar = styled("div", {
   base: {
     ...drawerElementBase,
-    width: DrawerWidth,
-    backgroundColor: "base.100",
+    width: SidebarWidth,
+    backgroundColor: "base.200",
     borderRight: "default",
-    boxShadow: "lg",
-    zIndex: "50",
+    boxShadow: {
+      base: "lg", // Mobile: shadow over content
+      lg: "none", // Desktop: no shadow when beside content
+    },
+    zIndex: {
+      base: "50", // Mobile: over content
+      lg: "10", // Desktop: below overlays but above content
+    },
     transform: "translateX(-100%)",
     ...drawerVisibilityStates,
     "[data-peer=drawer]:checked ~ &": {
@@ -252,7 +262,7 @@ const BottomNavButton = styled("label", {
   },
 });
 
-const DrawerContent = styled("div", {
+const SidebarContent = styled("div", {
   base: {
     padding: "6",
     height: "full",
@@ -260,7 +270,33 @@ const DrawerContent = styled("div", {
   },
 });
 
-const DrawerHeader = styled("div", {
+const MainContent = styled("div", {
+  base: {
+    position: "fixed",
+    top: NavbarHeight,
+    left: "0",
+    right: "0",
+    bottom: {
+      base: BottomDashHeight,
+      sm: "0",
+    },
+    backgroundColor: "base.100",
+    overflow: "auto",
+    transition: "all 0.3s ease",
+    // Adjust for hidden navbar
+    "[data-peer=navbar]:checked ~ &": {
+      top: "0",
+    },
+    // On desktop: adjust for visible sidebar
+    lg: {
+      "[data-peer=drawer]:checked ~ &": {
+        left: SidebarWidth,
+      },
+    },
+  },
+});
+
+const SidebarHeader = styled("div", {
   base: {
     fontSize: "xl",
     fontWeight: "bold",
@@ -271,7 +307,7 @@ const DrawerHeader = styled("div", {
   },
 });
 
-const DrawerNav = styled("nav", {
+const SidebarNav = styled("nav", {
   base: {
     display: "flex",
     flexDirection: "column",
@@ -279,7 +315,7 @@ const DrawerNav = styled("nav", {
   },
 });
 
-const DrawerNavLink = styled("a", {
+const SidebarNavLink = styled("a", {
   base: {
     color: "base.content",
     textDecoration: "none",
@@ -295,7 +331,7 @@ const DrawerNavLink = styled("a", {
   },
 });
 
-const DrawerNavButton = styled("label", {
+const SidebarNavButton = styled("label", {
   base: {
     display: "flex",
     alignItems: "center",
@@ -323,7 +359,11 @@ const DrawerToggleButton = (props: { drawerId: string }) => (
   </BottomDrawerButton>
 );
 
-export default function Layout() {
+interface LayoutProps {
+  children?: any;
+}
+
+export default function Layout(props: LayoutProps) {
   const drawerId = createUniqueId();
   const navbarId = createUniqueId();
 
@@ -351,7 +391,7 @@ export default function Layout() {
   // Global keybindings
   useKeybinding(createKeybinding("b", { ctrlKey: true }), toggleDrawer);
   useKeybinding(createKeybinding("Escape"), closeDrawer);
-  useKeybinding(createKeybinding("n", { ctrlKey: true }), toggleNavbar);
+  useKeybinding(createKeybinding("m", { ctrlKey: true }), toggleNavbar);
 
   return (
     <div>
@@ -370,19 +410,21 @@ export default function Layout() {
       </Navbar>
 
       <Overlay onClick={closeDrawer} />
-      <Drawer>
-        <DrawerContent>
-          <DrawerHeader>Menu</DrawerHeader>
-          <DrawerNav>
-            <DrawerNavLink href="/">Home</DrawerNavLink>
-            <DrawerNavLink href="/docs">Documentation</DrawerNavLink>
-            <DrawerNavLink href="/components">Components</DrawerNavLink>
-            <DrawerNavLink href="/examples">Examples</DrawerNavLink>
-            <DrawerNavLink href="/about">About</DrawerNavLink>
-            <DrawerNavButton for={navbarId}>Toggle Navbar</DrawerNavButton>
-          </DrawerNav>
-        </DrawerContent>
-      </Drawer>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarHeader>Menu</SidebarHeader>
+          <SidebarNav>
+            <SidebarNavLink href="/">Home</SidebarNavLink>
+            <SidebarNavLink href="/docs">Documentation</SidebarNavLink>
+            <SidebarNavLink href="/components">Components</SidebarNavLink>
+            <SidebarNavLink href="/examples">Examples</SidebarNavLink>
+            <SidebarNavLink href="/about">About</SidebarNavLink>
+            <SidebarNavButton for={navbarId}>Toggle Navbar</SidebarNavButton>
+          </SidebarNav>
+        </SidebarContent>
+      </Sidebar>
+
+      <MainContent>{props.children}</MainContent>
 
       <BottomDash>
         <BottomNavLink href="/">Home</BottomNavLink>
