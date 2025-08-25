@@ -3,6 +3,10 @@ import { createSignal } from "solid-js";
 import { article } from "../../styled-system/recipes";
 
 export default function ArticlesLayout(props: RouteSectionProps) {
-  return <div class={article()}>{props.children}</div>;
+  const [getTheme, setTheme] = createSignal<string>();
+  return (
+    <div class={article()} data-theme={getTheme}>
+      {props.children}
+    </div>
+  );
 }
-

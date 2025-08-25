@@ -6,9 +6,11 @@ import LightTheme from "./themes/light";
 import night from "./themes/night";
 import corporate from "./themes/corporate";
 
-const prefersDarkTheme = night;
+const prefersDarkTheme = dracula;
 const darkTheme = night;
 const defaultTheme = corporate;
+
+// TODO favor data-theme over prefers-color-scheme
 
 const backgroundTransition = "background-color 0.2s ease, color 0.2s ease";
 
@@ -41,9 +43,9 @@ export default definePreset({
           100: {
             value: {
               base: defaultTheme.base[100].value,
+              _synthwaveTheme: synthwave.base[100].value,
               _dark: darkTheme.base[100].value,
               _osDark: prefersDarkTheme.base[100].value,
-              _synthwaveTheme: synthwave.base[100].value,
             },
             description: "Adaptive lightest base color",
           },
