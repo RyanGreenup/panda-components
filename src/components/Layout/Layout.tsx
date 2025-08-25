@@ -1,12 +1,12 @@
+import { createUniqueId, For } from "solid-js";
 import { styled } from "../../../styled-system/jsx";
-import { css } from "../../../styled-system/css";
-import { createUniqueId } from "solid-js";
-import { useKeybinding, createKeybinding } from "./hooks/useKeybinding";
 import { center } from "../../../styled-system/patterns";
+import { createKeybinding, useKeybinding } from "./hooks/useKeybinding";
 
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
 const SidebarWidth = "20rem"; // 320px - wider for desktop sidebar
+const ResizeHandleWidth = "1rem";
 /**
  * Consistent Animation System - All transitions in one place for maintainability
  */
@@ -31,7 +31,7 @@ const transitions = {
     // Combined transitions for complex elements
     drawerSlide: "transform 0.3s ease, all 0.3s ease",
     overlayFade: "all 0.3s ease",
-  }
+  },
 } as const;
 
 /**
@@ -198,6 +198,7 @@ const Overlay = styled("div", {
 const Sidebar = styled("div", {
   base: {
     ...drawerElementBase,
+    position: "fixed", // Keep fixed positioning
     width: SidebarWidth,
     backgroundColor: "base.200",
     borderRight: "default",
@@ -393,6 +394,35 @@ const SidebarNavButton = styled("label", {
   },
 });
 
+const ResizeHandle = styled("div", {
+  base: {
+    position: "absolute",
+    top: "0",
+    right: "0",
+    width: "20px",
+    height: "full",
+    cursor: "col-resize",
+    transition: transitions.strings.interactiveAll,
+    display: {
+      base: "none", // Hidden on mobile (drawer mode)
+      lg: "block", // Visible on desktop (sidebar mode)
+    },
+    borderRight: "2px solid transparent",
+    backgroundColor: "base.300",
+    _hover: {
+      backgroundColor: "base.300",
+      borderRightColor: "primary",
+      _before: {
+        backgroundColor: "primary",
+      },
+    },
+    _active: {
+      backgroundColor: "primary",
+      borderRightColor: "primary",
+    },
+  },
+});
+
 const DrawerToggleButton = (props: { drawerId: string }) => (
   <BottomDrawerButton for={props.drawerId}>
     <HamburgerIcon>
@@ -406,6 +436,16 @@ const DrawerToggleButton = (props: { drawerId: string }) => (
 interface LayoutProps {
   children?: any;
 }
+
+const DummySidebarContent = () => (
+  <For each={Array.from({ length: 50 }, (_, i) => i)}>
+    {(item) => (
+      <SidebarNavLink href={`/item-${item}`}>
+        Navigation Item {item + 1}
+      </SidebarNavLink>
+    )}
+  </For>
+);
 
 export default function Layout(props: LayoutProps) {
   const drawerId = createUniqueId();
@@ -434,7 +474,9 @@ export default function Layout(props: LayoutProps) {
   };
 
   const toggleBottomDash = () => {
-    const bottomDashToggle = document.getElementById(bottomDashId) as HTMLInputElement;
+    const bottomDashToggle = document.getElementById(
+      bottomDashId,
+    ) as HTMLInputElement;
     if (bottomDashToggle) {
       bottomDashToggle.checked = !bottomDashToggle.checked;
     }
@@ -449,7 +491,11 @@ export default function Layout(props: LayoutProps) {
   return (
     <div>
       <NavbarToggle type="checkbox" id={navbarId} data-peer="navbar" />
-      <BottomDashToggle type="checkbox" id={bottomDashId} data-peer="bottomdash" />
+      <BottomDashToggle
+        type="checkbox"
+        id={bottomDashId}
+        data-peer="bottomdash"
+      />
       <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
       <Navbar>
         <div class={center({ gap: "1rem" })}>
@@ -465,6 +511,7 @@ export default function Layout(props: LayoutProps) {
 
       <Overlay onClick={closeDrawer} />
       <Sidebar>
+        <ResizeHandle />
         <SidebarContent>
           <SidebarHeader>Menu</SidebarHeader>
           <SidebarNav>
@@ -474,7 +521,10 @@ export default function Layout(props: LayoutProps) {
             <SidebarNavLink href="/examples">Examples</SidebarNavLink>
             <SidebarNavLink href="/about">About</SidebarNavLink>
             <SidebarNavButton for={navbarId}>Toggle Navbar</SidebarNavButton>
-            <SidebarNavButton for={bottomDashId}>Toggle Bottom Dash</SidebarNavButton>
+            <SidebarNavButton for={bottomDashId}>
+              Toggle Bottom Dash
+            </SidebarNavButton>
+            <DummySidebarContent />
           </SidebarNav>
         </SidebarContent>
       </Sidebar>
