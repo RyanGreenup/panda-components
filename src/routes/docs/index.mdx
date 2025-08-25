@@ -1,6 +1,9 @@
 import Counter from "~/components/Examples/Counter";
 import { CardExample } from "~/components/Examples/Card";
 import { ButtonExample } from "~/components/Examples/Button";
+import { CalloutExample } from "~/components/Examples/Callout";
+
+import {Callout} from "~/components/Callout";
 
 # Solid JS Panda CSS Components
 
@@ -17,8 +20,11 @@ The docs are in MDX, for example we can include components like a counter:
 
 ## Components to Refactor into Stories
 
-> [!NOTE]
-> We are not using Story book as I need exemplars of Solid Start Server Side functions with `createAsync` (maybe `createResource`), `query` and `Suspense`
+
+<Callout type="note">
+We are not using Story book as I need exemplars of Solid Start Server Side functions with `createAsync` (maybe `createResource`), `query` and `Suspense`
+</Callout>
+
 
 ### Card Component
 
@@ -31,4 +37,10 @@ The Card component provides a flexible container with multiple variants:
 The Button component offers multiple variants, sizes, and states:
 
 <ButtonExample />
+
+### Callout Component
+
+The Callout component provides contextual messages with different severity levels:
+
+<CalloutExample />
 
