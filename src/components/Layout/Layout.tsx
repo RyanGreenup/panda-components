@@ -228,10 +228,10 @@ const Sidebar = styled("div", {
     },
     // Conditional transitions
     "&[data-resizing=true]": {
-      transition: "transform 0.3s ease, bottom 0.3s ease", // Keep transform and bottom, remove width during resize
+      transition: "transform 0.3s ease, top 0.3s ease, bottom 0.3s ease", // Keep transform, top and bottom, remove width during resize
     },
     "&:not([data-resizing=true])": {
-      transition: "transform 0.3s ease, width 0.2s ease, bottom 0.3s ease", // All transitions when not resizing
+      transition: "transform 0.3s ease, width 0.2s ease, top 0.3s ease, bottom 0.3s ease", // All transitions when not resizing
     },
   },
 });
