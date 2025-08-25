@@ -1,4 +1,4 @@
-import { createUniqueId, For } from "solid-js";
+import { For } from "solid-js";
 import { styled } from "../../../styled-system/jsx";
 import { center } from "../../../styled-system/patterns";
 import { createKeybinding, useKeybinding } from "./hooks/useKeybinding";
@@ -418,38 +418,28 @@ const DummySidebarContent = () => (
 );
 
 export default function Layout(props: LayoutProps) {
-  const drawerId = createUniqueId();
-  const navbarId = createUniqueId();
-  const bottomDashId = createUniqueId();
+  // These refs are safe to use with definite assignment assertion (!) because:
+  // 1. The JSX elements with matching refs are rendered (sync) below
+  // 2. SolidJS assigns refs during element creation
+  // 3. Usage of these refs can only occur after they are rendered
+  let drawerRef!: HTMLInputElement;
+  let navbarRef!: HTMLInputElement;
+  let bottomDashRef!: HTMLInputElement;
 
   const toggleDrawer = () => {
-    const drawerToggle = document.getElementById(drawerId) as HTMLInputElement;
-    if (drawerToggle) {
-      drawerToggle.checked = !drawerToggle.checked;
-    }
+    drawerRef.checked = !drawerRef.checked;
   };
 
   const closeDrawer = () => {
-    const drawerToggle = document.getElementById(drawerId) as HTMLInputElement;
-    if (drawerToggle) {
-      drawerToggle.checked = false;
-    }
+    drawerRef.checked = false;
   };
 
   const toggleNavbar = () => {
-    const navbarToggle = document.getElementById(navbarId) as HTMLInputElement;
-    if (navbarToggle) {
-      navbarToggle.checked = !navbarToggle.checked;
-    }
+    navbarRef.checked = !navbarRef.checked;
   };
 
   const toggleBottomDash = () => {
-    const bottomDashToggle = document.getElementById(
-      bottomDashId,
-    ) as HTMLInputElement;
-    if (bottomDashToggle) {
-      bottomDashToggle.checked = !bottomDashToggle.checked;
-    }
+    bottomDashRef.checked = !bottomDashRef.checked;
   };
 
   // Global keybindings
@@ -460,16 +450,22 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <div>
-      <NavbarToggle type="checkbox" id={navbarId} data-peer="navbar" />
+      <NavbarToggle type="checkbox" ref={navbarRef} data-peer="navbar" />
       <BottomDashToggle
         type="checkbox"
-        id={bottomDashId}
+        ref={bottomDashRef}
         data-peer="bottomdash"
       />
-      <DrawerToggle type="checkbox" id={drawerId} data-peer="drawer" />
+      <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" />
       <Navbar>
         <div class={center({ gap: "1rem" })}>
-          <DrawerToggleButton drawerId={drawerId} />
+          <DrawerButton onClick={toggleDrawer}>
+            <HamburgerIcon>
+              <span></span>
+              <span></span>
+              <span></span>
+            </HamburgerIcon>
+          </DrawerButton>
           <NavBrand>Panda Components</NavBrand>
         </div>
         <NavLinks>
@@ -481,7 +477,6 @@ export default function Layout(props: LayoutProps) {
 
       <Overlay onClick={closeDrawer} />
       <Sidebar>
-        <ResizeHandle />
         <SidebarContent>
           <SidebarHeader>Menu</SidebarHeader>
           <SidebarNav>
@@ -490,8 +485,10 @@ export default function Layout(props: LayoutProps) {
             <SidebarNavLink href="/components">Components</SidebarNavLink>
             <SidebarNavLink href="/examples">Examples</SidebarNavLink>
             <SidebarNavLink href="/about">About</SidebarNavLink>
-            <SidebarNavButton for={navbarId}>Toggle Navbar</SidebarNavButton>
-            <SidebarNavButton for={bottomDashId}>
+            <SidebarNavButton onClick={toggleNavbar}>
+              Toggle Navbar
+            </SidebarNavButton>
+            <SidebarNavButton onClick={toggleBottomDash}>
               Toggle Bottom Dash
             </SidebarNavButton>
             <DummySidebarContent />
@@ -506,8 +503,14 @@ export default function Layout(props: LayoutProps) {
         <BottomNavLink href="/docs">Docs</BottomNavLink>
         <BottomNavLink href="/components">Components</BottomNavLink>
         <BottomNavLink href="/examples">Examples</BottomNavLink>
-        <BottomNavButton for={navbarId}>Nav</BottomNavButton>
-        <DrawerToggleButton drawerId={drawerId} />
+        <BottomNavButton onClick={toggleNavbar}>Nav</BottomNavButton>
+        <BottomDrawerButton onClick={toggleDrawer}>
+          <HamburgerIcon>
+            <span></span>
+            <span></span>
+            <span></span>
+          </HamburgerIcon>
+        </BottomDrawerButton>
       </BottomDash>
     </div>
   );
