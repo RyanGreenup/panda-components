@@ -2,11 +2,21 @@ import { styled } from "../../../styled-system/jsx";
 import { createUniqueId } from "solid-js";
 
 const NavbarHeight = "4rem";
-const DrawerHeight = `calc(100dvh - ${NavbarHeight})`;
 const BottomDashHeight = "4rem";
-// was 80=20rem,
 const DrawerWidth = "80";
-// const DrawerHeight = `50dvh`;
+const DrawerHeight = `calc(100dvh - ${NavbarHeight})`;
+/**
+ * Consistent Animation to ensure everything moves in lockstep
+ */
+const translateTransition = {
+  bottomDash: "transform 0.3s ease",
+  drawer: "all 0.3s ease",
+};
+/**
+ * Drawer Height on Small Displays. On Small Displays the dash is visible so it
+ * must adjust
+ */
+const DrawerHeightSM = `calc(100dvh - ${NavbarHeight} - ${BottomDashHeight})`;
 
 const Navbar = styled("nav", {
   base: {
@@ -105,11 +115,13 @@ const HamburgerIcon = styled("div", {
 const Overlay = styled("div", {
   base: {
     position: "fixed",
-    top: "0",
+    top: NavbarHeight,
     left: "0",
-    mt: NavbarHeight,
-    width: "full",
-    height: DrawerHeight,
+    right: "0",
+    bottom: {
+      base: BottomDashHeight,
+      sm: "0",
+    },
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: "40",
     opacity: "0",
@@ -125,19 +137,59 @@ const Overlay = styled("div", {
 const Drawer = styled("div", {
   base: {
     position: "fixed",
-    top: "0",
+    top: NavbarHeight,
     left: "0",
-    mt: NavbarHeight,
-    height: DrawerHeight,
+    bottom: {
+      base: BottomDashHeight,
+      sm: "0",
+    },
     width: DrawerWidth,
     backgroundColor: "base.100",
     borderRight: "default",
     boxShadow: "lg",
     zIndex: "50",
     transform: "translateX(-100%)",
-    transition: "transform 0.3s ease",
+    transition: "all 0.3s ease",
     "[data-peer=drawer]:checked ~ &": {
       transform: "translateX(0)",
+    },
+  },
+});
+
+const BottomDash = styled("div", {
+  base: {
+    display: "flex",
+    position: "fixed",
+    bottom: "0",
+    left: "0",
+    right: "0",
+    height: BottomDashHeight,
+    backgroundColor: "base.200",
+    borderTop: "default",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: "30",
+    gap: "6",
+    transform: {
+      base: "translateY(0)",
+      sm: "translateY(100%)",
+    },
+    transition: translateTransition.bottomDash,
+  },
+});
+
+const BottomNavLink = styled("a", {
+  base: {
+    color: "base.content",
+    textDecoration: "none",
+    fontSize: "sm",
+    fontWeight: "medium",
+    padding: "2",
+    borderRadius: "md",
+    transition: "all 0.2s ease",
+    _hover: {
+      color: "primary",
+      backgroundColor: "base.300",
     },
   },
 });
@@ -222,6 +274,13 @@ export default function Layout() {
           </DrawerNav>
         </DrawerContent>
       </Drawer>
+
+      <BottomDash>
+        <BottomNavLink href="/">Home</BottomNavLink>
+        <BottomNavLink href="/docs">Docs</BottomNavLink>
+        <BottomNavLink href="/components">Components</BottomNavLink>
+        <BottomNavLink href="/examples">Examples</BottomNavLink>
+      </BottomDash>
     </div>
   );
 }
