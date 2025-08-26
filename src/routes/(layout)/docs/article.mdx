@@ -81,7 +81,7 @@ Typography involves multiple considerations:
 ### Quotations
 
 > "Typography is the craft of endowing human language with a durable visual form, and thus with an independent existence."
-> 
+>
 > — Robert Bringhurst, The Elements of Typographic Style
 
 ### Code Examples
@@ -118,6 +118,46 @@ When presenting data, tables provide structure:
 | H3      | 1.75rem   | 1.4         | 2.5rem     |
 | Body    | 1.125rem  | 1.75        | -          |
 
+However, Solid-js doesn't support these, so we have to use HTML because the GFM plugins not supported:
+
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Font Size</th>
+<th>Line Height</th>
+<th>Margin Top</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1</td>
+<td>3rem</td>
+<td>1.2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>2.25rem</td>
+<td>1.3</td>
+<td>3rem</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>1.75rem</td>
+<td>1.4</td>
+<td>2.5rem</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>1.125rem</td>
+<td>1.75</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+
+
 ## Special Elements
 
 ### Description Lists
@@ -125,10 +165,10 @@ When presenting data, tables provide structure:
 <dl>
   <dt>Typography</dt>
   <dd>The art and technique of arranging type to make written language legible, readable, and appealing when displayed.</dd>
-  
+
   <dt>Kerning</dt>
   <dd>The process of adjusting the spacing between characters in a proportional font.</dd>
-  
+
   <dt>Leading</dt>
   <dd>The vertical spacing between lines of text, measured from baseline to baseline.</dd>
 </dl>
