@@ -182,7 +182,7 @@ const HamburgerIcon = styled("div", {
   },
 });
 
-const Overlay = styled("div", {
+const Overlay = styled("label", {
   base: {
     ...drawerElementBase,
     right: "0",
@@ -193,7 +193,7 @@ const Overlay = styled("div", {
     cursor: "pointer",
     display: {
       base: "block", // Mobile: show overlay
-      lg: "none", // Desktop: no overlay needed
+      md: "none", // Desktop: no overlay needed
     },
     ...drawerVisibilityStates,
     "[data-peer=drawer]:checked ~ &": {
@@ -209,17 +209,17 @@ const Sidebar = styled("div", {
     position: "fixed", // Keep fixed positioning
     width: {
       base: SidebarWidth,
-      lg: sidebarWidthVarWrapped, // Use CSS variable on desktop
+      md: sidebarWidthVarWrapped, // Use CSS variable on desktop
     },
     backgroundColor: "base.200",
     borderRight: "default",
     boxShadow: {
       base: "lg", // Mobile: shadow over content
-      lg: "none", // Desktop: no shadow when beside content
+      md: "none", // Desktop: no shadow when beside content
     },
     zIndex: {
       base: "50", // Mobile: over content
-      lg: "10", // Desktop: below overlays but above content
+      md: "10", // Desktop: below overlays but above content
     },
     transform: "translateX(-100%)",
     ...drawerVisibilityStates,
@@ -324,7 +324,7 @@ const SidebarContent = styled("div", {
     padding: "6",
     mr: {
       base: "0", // Full width on mobile
-      lg: ResizeHandleWidth, // Leave space for resize handle on desktop
+      md: ResizeHandleWidth, // Leave space for resize handle on desktop
     },
     height: "full",
     overflow: "auto",
@@ -356,7 +356,7 @@ const MainContent = styled("div", {
       },
     },
     // On desktop: adjust for visible sidebar
-    lg: {
+    md: {
       "[data-peer=drawer]:checked ~ &": {
         left: sidebarWidthVarWrapped,
       },
@@ -376,6 +376,29 @@ const SidebarHeader = styled("div", {
     marginBottom: "6",
     paddingBottom: "4",
     borderBottom: "default",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+});
+
+const CloseButton = styled("label", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "8",
+    height: "8",
+    cursor: "pointer",
+    borderRadius: "md",
+    transition: transitions.strings.interactiveAll,
+    _hover: {
+      backgroundColor: "base.300",
+    },
+    "& span": {
+      fontSize: "lg",
+      color: "base.content",
+    },
   },
 });
 
@@ -442,7 +465,7 @@ const ResizeHandle = styled("div", {
     backgroundColor: "transparent",
     display: {
       base: "none", // Hidden on mobile
-      lg: "block", // Only show on desktop
+      md: "block", // Only show on desktop
     },
     transition: "background-color 0.2s ease",
     zIndex: zIndices.resizeHandle, // Above content
@@ -582,10 +605,10 @@ export default function Layout(props: LayoutProps) {
         ref={bottomDashRef}
         data-peer="bottomdash"
       />
-      <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" />
+      <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" id="drawer-toggle" />
       <Navbar>
         <div class={center({ gap: "1rem" })}>
-          <DrawerButton onClick={toggleDrawer}>
+          <DrawerButton for="drawer-toggle">
             <HamburgerIcon>
               <span></span>
               <span></span>
@@ -601,10 +624,15 @@ export default function Layout(props: LayoutProps) {
         </NavLinks>
       </Navbar>
 
-      <Overlay onClick={closeDrawer} />
+      <Overlay for="drawer-toggle" />
       <Sidebar ref={sidebarRef}>
         <SidebarContent>
-          <SidebarHeader>Menu</SidebarHeader>
+          <SidebarHeader>
+            Menu
+            <CloseButton for="drawer-toggle">
+              <span>✕</span>
+            </CloseButton>
+          </SidebarHeader>
           <SidebarNav>
             <SidebarNavLink href="/">Home</SidebarNavLink>
             <SidebarNavLink href="/docs">Documentation</SidebarNavLink>
@@ -620,7 +648,7 @@ export default function Layout(props: LayoutProps) {
             <DummySidebarContent />
           </SidebarNav>
         </SidebarContent>
-        <ResizeHandle onMouseDown={handleMouseDown} />
+        <ResizeHandle onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} />
       </Sidebar>
 
       <MainContent ref={mainContentRef}>{props.children}</MainContent>
@@ -631,7 +659,7 @@ export default function Layout(props: LayoutProps) {
         <BottomNavLink href="/components">Components</BottomNavLink>
         <BottomNavLink href="/examples">Examples</BottomNavLink>
         <BottomNavButton onClick={toggleNavbar}>Nav</BottomNavButton>
-        <BottomDrawerButton onClick={toggleDrawer}>
+        <BottomDrawerButton for="drawer-toggle">
           <HamburgerIcon>
             <span></span>
             <span></span>
