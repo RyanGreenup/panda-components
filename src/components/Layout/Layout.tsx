@@ -79,6 +79,21 @@ const drawerVisibilityStates = {
   "[data-peer=drawer]:checked ~ &": {},
 } as const;
 
+/**
+ * Base button styles - shared across all interactive buttons
+ */
+const buttonBase = {
+  display: "flex",
+  alignItems: "center",
+  cursor: "pointer",
+  padding: "2",
+  borderRadius: "md",
+  transition: transitions.strings.interactiveAll,
+  _hover: {
+    backgroundColor: "base.300",
+  },
+} as const;
+
 const Navbar = styled("nav", {
   base: {
     display: "flex",
@@ -97,6 +112,14 @@ const Navbar = styled("nav", {
     "[data-peer=navbar]:checked ~ &": {
       transform: "translateY(-100%)",
     },
+  },
+});
+
+const NavbarGroup = styled("div", {
+  base: {
+    display: "flex",
+    alignItems: "center",
+    gap: "4",
   },
 });
 
@@ -129,36 +152,17 @@ const NavLink = styled("a", {
   },
 });
 
-const DrawerToggle = styled("input", {
-  base: {
-    display: "none",
-  },
-});
+// Shared toggle input styles
+const toggleInputBase = {
+  display: "none",
+} as const;
 
-const NavbarToggle = styled("input", {
-  base: {
-    display: "none",
-  },
-});
-
-const BottomDashToggle = styled("input", {
-  base: {
-    display: "none",
-  },
-});
+const DrawerToggle = styled("input", { base: toggleInputBase });
+const NavbarToggle = styled("input", { base: toggleInputBase });
+const BottomDashToggle = styled("input", { base: toggleInputBase });
 
 const DrawerButton = styled("label", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    cursor: "pointer",
-    padding: "2",
-    borderRadius: "md",
-    transition: transitions.strings.interactiveAll,
-    _hover: {
-      backgroundColor: "base.300",
-    },
-  },
+  base: buttonBase,
 });
 
 const HamburgerIcon = styled("div", {
@@ -193,7 +197,7 @@ const Overlay = styled("label", {
   base: {
     ...drawerElementBase,
     right: "0",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "blackAlpha.500",
     zIndex: "40",
     opacity: "0",
     visibility: "hidden",
@@ -288,43 +292,21 @@ const BottomNavLink = styled("a", {
   },
 });
 
-const BottomDrawerButton = styled("label", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "base.content",
-    fontSize: "sm",
-    fontWeight: "medium",
-    padding: "2",
-    borderRadius: "md",
-    cursor: "pointer",
-    transition: transitions.strings.interactiveAll,
-    _hover: {
-      color: "primary",
-      backgroundColor: "base.300",
-    },
+// Shared bottom button styles
+const bottomButtonBase = {
+  ...buttonBase,
+  justifyContent: "center",
+  color: "base.content",
+  fontSize: "sm",
+  fontWeight: "medium",
+  _hover: {
+    color: "primary",
+    backgroundColor: "base.300",
   },
-});
+} as const;
 
-const BottomNavButton = styled("label", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "base.content",
-    fontSize: "sm",
-    fontWeight: "medium",
-    padding: "2",
-    borderRadius: "md",
-    cursor: "pointer",
-    transition: transitions.strings.interactiveAll,
-    _hover: {
-      color: "primary",
-      backgroundColor: "base.300",
-    },
-  },
-});
+const BottomDrawerButton = styled("label", { base: bottomButtonBase });
+const BottomNavButton = styled("label", { base: bottomButtonBase });
 
 const SidebarContent = styled("div", {
   base: {
@@ -500,8 +482,8 @@ const ResizeHandle = styled("div", {
       transition: "opacity 0.2s ease, transform 0.3s ease-in-out",
       pointerEvents: "none",
       backgroundColor: "base.content",
-      width: "0.2rem",
-      height: "2rem",
+      width: "0.5",
+      height: "8",
     },
   },
 });
@@ -615,7 +597,7 @@ export default function Layout(props: LayoutProps) {
       />
       <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" id={ToggleIds.drawer} />
       <Navbar>
-        <div class={center({ gap: "1rem" })}>
+        <NavbarGroup>
           <DrawerButton for={ToggleIds.drawer}>
             <HamburgerIcon>
               <span></span>
@@ -624,7 +606,7 @@ export default function Layout(props: LayoutProps) {
             </HamburgerIcon>
           </DrawerButton>
           <NavBrand>Panda Components</NavBrand>
-        </div>
+        </NavbarGroup>
         <NavLinks>
           <NavLink href="/">Home</NavLink>
           <NavLink href="/docs">Docs</NavLink>
