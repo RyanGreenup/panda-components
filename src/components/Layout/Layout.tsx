@@ -12,6 +12,13 @@ const sidebarWidthVar = "--sidebar-width";
 const sidebarWidthVarWrapped = `var(${sidebarWidthVar}, 20rem)`;
 const ResizeHandleWidth = "8px"; // Standard resize handle width
 const ScrollbarWidth = "8px"; // Standard scrollbar width
+
+// Toggle IDs - centralized to prevent typos and ensure consistency
+const ToggleIds = {
+  drawer: "drawer-toggle",
+  navbar: "navbar-toggle", 
+  bottomDash: "bottomdash-toggle",
+} as const;
 const zIndices = {
   resizeHandle: 20,
 };
@@ -599,17 +606,17 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <div>
-      <NavbarToggle type="checkbox" ref={navbarRef} data-peer="navbar" id="navbar-toggle" />
+      <NavbarToggle type="checkbox" ref={navbarRef} data-peer="navbar" id={ToggleIds.navbar} />
       <BottomDashToggle
         type="checkbox"
         ref={bottomDashRef}
         data-peer="bottomdash"
-        id="bottomdash-toggle"
+        id={ToggleIds.bottomDash}
       />
-      <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" id="drawer-toggle" />
+      <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" id={ToggleIds.drawer} />
       <Navbar>
         <div class={center({ gap: "1rem" })}>
-          <DrawerButton for="drawer-toggle">
+          <DrawerButton for={ToggleIds.drawer}>
             <HamburgerIcon>
               <span></span>
               <span></span>
@@ -625,12 +632,12 @@ export default function Layout(props: LayoutProps) {
         </NavLinks>
       </Navbar>
 
-      <Overlay for="drawer-toggle" />
+      <Overlay for={ToggleIds.drawer} />
       <Sidebar ref={sidebarRef}>
         <SidebarContent>
           <SidebarHeader>
             Menu
-            <CloseButton for="drawer-toggle">
+            <CloseButton for={ToggleIds.drawer}>
               <span>✕</span>
             </CloseButton>
           </SidebarHeader>
@@ -640,10 +647,10 @@ export default function Layout(props: LayoutProps) {
             <SidebarNavLink href="/components">Components</SidebarNavLink>
             <SidebarNavLink href="/examples">Examples</SidebarNavLink>
             <SidebarNavLink href="/about">About</SidebarNavLink>
-            <SidebarNavButton for="navbar-toggle">
+            <SidebarNavButton for={ToggleIds.navbar}>
               Toggle Navbar
             </SidebarNavButton>
-            <SidebarNavButton for="bottomdash-toggle">
+            <SidebarNavButton for={ToggleIds.bottomDash}>
               Toggle Bottom Dash
             </SidebarNavButton>
             <DummySidebarContent />
@@ -659,8 +666,8 @@ export default function Layout(props: LayoutProps) {
         <BottomNavLink href="/docs">Docs</BottomNavLink>
         <BottomNavLink href="/components">Components</BottomNavLink>
         <BottomNavLink href="/examples">Examples</BottomNavLink>
-        <BottomNavButton for="navbar-toggle">Nav</BottomNavButton>
-        <BottomDrawerButton for="drawer-toggle">
+        <BottomNavButton for={ToggleIds.navbar}>Nav</BottomNavButton>
+        <BottomDrawerButton for={ToggleIds.drawer}>
           <HamburgerIcon>
             <span></span>
             <span></span>
