@@ -212,15 +212,63 @@ const OverlaySty: SystemStyleObject = {
   },
 };
 
+const SidebarHeaderSty: SystemStyleObject = {
+  fontSize: "xl",
+  fontWeight: "bold",
+  color: "base.content",
+  marginBottom: "6",
+  paddingBottom: "4",
+  borderBottom: "default",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+};
+
+const HamburgerIconSty: SystemStyleObject = {
+  width: "6",
+  height: "6",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  "& span": {
+    width: "full",
+    height: "0.5",
+    backgroundColor: "base.content",
+    borderRadius: "sm",
+    transition: transitions.strings.layoutAll,
+  },
+  "[data-peer=drawer]:checked ~ * &": {
+    "& span:nth-child(1)": {
+      transform: "rotate(45deg) translate(5px, 5px)",
+    },
+    "& span:nth-child(2)": {
+      opacity: "0",
+    },
+    "& span:nth-child(3)": {
+      transform: "rotate(-45deg) translate(7px, -6px)",
+    },
+  },
+};
+
 export const layout = defineSlotRecipe({
   className: "layout",
   description: "Responsive Sidebar Layout",
-  slots: ["navbar", "mainContent", "bottomDash", "sidebar", "overlay"],
+  slots: [
+    "navbar",
+    "mainContent",
+    "bottomDash",
+    "sidebar",
+    "overlay",
+    "sidebarHeader",
+    "hamburgerIcon",
+  ],
   base: {
     navbar: navbarStyle,
     mainContent: mainContentStyle,
     bottomDash: BottomDashSty,
     sidebar: SidebarSty,
     overlay: OverlaySty,
+    sidebarHeader: SidebarHeaderSty,
+    hamburgerIcon: HamburgerIconSty,
   },
 });

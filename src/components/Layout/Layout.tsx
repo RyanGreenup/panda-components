@@ -9,6 +9,8 @@ import {
   BottomDash,
   Sidebar,
   Overlay,
+  SidebarHeader,
+  HamburgerIcon,
 } from "~/presets/recipes/layout.components";
 import { layout } from "../../../styled-system/recipes";
 import { drawerElementBase } from "~/presets/recipes/layout.recipe";
@@ -122,34 +124,6 @@ const DrawerButton = styled("label", {
   base: buttonBase,
 });
 
-const HamburgerIcon = styled("div", {
-  base: {
-    width: "6",
-    height: "6",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    "& span": {
-      width: "full",
-      height: "0.5",
-      backgroundColor: "base.content",
-      borderRadius: "sm",
-      transition: transitions.strings.layoutAll,
-    },
-    "[data-peer=drawer]:checked ~ * &": {
-      "& span:nth-child(1)": {
-        transform: "rotate(45deg) translate(5px, 5px)",
-      },
-      "& span:nth-child(2)": {
-        opacity: "0",
-      },
-      "& span:nth-child(3)": {
-        transform: "rotate(-45deg) translate(7px, -6px)",
-      },
-    },
-  },
-});
-
 const BottomNavLink = styled("a", {
   base: {
     color: "base.content",
@@ -181,20 +155,6 @@ const bottomButtonBase = {
 
 const BottomDrawerButton = styled("label", { base: bottomButtonBase });
 const BottomNavButton = styled("label", { base: bottomButtonBase });
-
-const SidebarHeader = styled("div", {
-  base: {
-    fontSize: "xl",
-    fontWeight: "bold",
-    color: "base.content",
-    marginBottom: "6",
-    paddingBottom: "4",
-    borderBottom: "default",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-});
 
 const CloseButton = styled("label", {
   base: {
