@@ -19,8 +19,14 @@ export const MainContent = (props: JSX.IntrinsicElements["div"]) => {
   return <div {...restProps} class={cx(layout().mainContent, className)} />;
 };
 
+// TODO run the layout() once
+export const BottomDash = (props: JSX.IntrinsicElements["div"]) => {
+  const { class: className, ...restProps } = props;
+  return <div {...restProps} class={cx(layout().bottomDash)} />;
+};
 // Export as a namespace for cleaner imports
 export const LayoutComponents = {
   Navbar,
   MainContent,
+  BottomDash,
 };

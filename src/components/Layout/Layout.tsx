@@ -3,7 +3,11 @@ import { styled } from "../../../styled-system/jsx";
 import { center } from "../../../styled-system/patterns";
 import { createKeybinding, useKeybinding } from "./hooks/useKeybinding";
 import { useResizeHandle } from "./hooks/useResizeHandle";
-import { LayoutComponents, Navbar } from "~/presets/recipes/layout.components";
+import {
+  Navbar,
+  MainContent,
+  BottomDash,
+} from "~/presets/recipes/layout.components";
 import { layout } from "../../../styled-system/recipes";
 
 const NavbarHeight = "4rem";
@@ -221,34 +225,6 @@ const Sidebar = styled("div", {
   },
 });
 
-const BottomDash = styled("div", {
-  base: {
-    display: "flex",
-    position: "fixed",
-    bottom: "0",
-    left: "0",
-    right: "0",
-    height: BottomDashHeight,
-    backgroundColor: "base.200",
-    borderTop: "default",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: "30",
-    gap: "6",
-    transform: {
-      base: "translateY(0)",
-      sm: "translateY(100%)",
-    },
-    transition: transitions.strings.layoutTransform,
-    "[data-peer=bottomdash]:checked ~ &": {
-      transform: {
-        base: "translateY(100%)",
-        sm: "translateY(100%)",
-      },
-    },
-  },
-});
-
 const BottomNavLink = styled("a", {
   base: {
     color: "base.content",
@@ -290,43 +266,6 @@ const SidebarContent = styled("div", {
     },
     height: "full",
     overflow: "auto",
-  },
-});
-
-const MainContent = styled("div", {
-  base: {
-    position: "fixed",
-    top: NavbarHeight,
-    left: "0",
-    right: "0",
-    bottom: {
-      base: BottomDashHeight,
-      sm: "0",
-    },
-    backgroundColor: "base.100",
-    overflow: "auto",
-    transition: transitions.strings.layoutAll,
-    // Adjust for hidden navbar
-    "[data-peer=navbar]:checked ~ &": {
-      top: "0",
-    },
-    // Adjust for hidden bottom dash - extends to full height on mobile
-    "[data-peer=bottomdash]:checked ~ &": {
-      bottom: {
-        base: "0",
-        sm: "0",
-      },
-    },
-    // On desktop: adjust for visible sidebar
-    md: {
-      "[data-peer=drawer]:checked ~ &": {
-        left: sidebarWidthVarWrapped,
-      },
-    },
-    // Disable transitions when resizing
-    "&[data-resizing=true]": {
-      transition: "none",
-    },
   },
 });
 
@@ -625,9 +564,7 @@ export default function Layout(props: LayoutProps) {
         />
       </Sidebar>
 
-      <LayoutComponents.MainContent ref={mainContentRef}>
-        {props.children}
-      </LayoutComponents.MainContent>
+      <MainContent ref={mainContentRef}>{props.children}</MainContent>
 
       <BottomDash>
         <BottomNavLink href="/">Home</BottomNavLink>

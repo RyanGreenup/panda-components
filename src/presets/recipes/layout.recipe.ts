@@ -100,12 +100,39 @@ const mainContentStyle: SystemStyleObject = {
   },
 };
 
+const BottomDashSty: SystemStyleObject = {
+  display: "flex",
+  position: "fixed",
+  bottom: "0",
+  left: "0",
+  right: "0",
+  height: BottomDashHeight,
+  backgroundColor: "base.200",
+  borderTop: "default",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: "30",
+  gap: "6",
+  transform: {
+    base: "translateY(0)",
+    sm: "translateY(100%)",
+  },
+  transition: transitions.strings.layoutTransform,
+  "[data-peer=bottomdash]:checked ~ &": {
+    transform: {
+      base: "translateY(100%)",
+      sm: "translateY(100%)",
+    },
+  },
+};
+
 export const layout = defineSlotRecipe({
   className: "layout",
   description: "Responsive Sidebar Layout",
-  slots: ["navbar", "mainContent"],
+  slots: ["navbar", "mainContent", "bottomDash"],
   base: {
     navbar: navbarStyle,
     mainContent: mainContentStyle,
+    bottomDash: BottomDashSty,
   },
 });
