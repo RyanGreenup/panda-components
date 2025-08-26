@@ -89,13 +89,70 @@ export const articleRecipe = defineRecipe({
 
     // Lists
     "& ul, & ol": {
-      marginBottom: "1.5rem",
-      paddingLeft: "1.5rem",
+      marginTop: "1.25rem",
+      marginBottom: "1.25rem",
+      marginLeft: "1.5rem",
+      paddingLeft: "1.625em",
+    },
+
+    "& ul": {
+      listStyleType: "disc",
+    },
+
+    "& ol": {
+      listStyleType: "decimal",
+    },
+
+    "& ul ul, & ul ol, & ol ul, & ol ol": {
+      marginTop: "0.75rem",
+      marginBottom: "0.75rem",
     },
 
     "& li": {
+      marginTop: "0.5rem",
       marginBottom: "0.5rem",
-      paddingLeft: "0.5rem",
+      paddingLeft: "0.375em",
+    },
+
+    "& li::marker": {
+      color: "text.tertiary",
+      fontWeight: "400",
+    },
+
+    "& ul > li::marker": {
+      fontSize: "1em",
+      lineHeight: "0",
+    },
+
+    "& ol > li::marker": {
+      fontWeight: "400",
+    },
+
+    // Nested lists
+    "& ul ul": {
+      listStyleType: "circle",
+    },
+
+    "& ul ul ul": {
+      listStyleType: "square",
+    },
+
+    // Description lists
+    "& dl": {
+      marginTop: "1.25rem",
+      marginBottom: "1.25rem",
+    },
+
+    "& dt": {
+      marginTop: "1.25rem",
+      fontWeight: "600",
+      color: "base.content",
+    },
+
+    "& dd": {
+      marginTop: "0.5rem",
+      marginLeft: "1.625em",
+      color: "text.secondary",
     },
 
     // Code blocks
