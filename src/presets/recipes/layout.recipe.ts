@@ -6,7 +6,6 @@ import {
 import { css } from "vinxi/dist/types/lib/plugins/css";
 
 // TODO Refactor into tokens
-const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
 const SidebarWidth = "20rem"; // 20rem 320px - wider for desktop sidebar
 export const SidebarWidthPx = 320;
@@ -50,7 +49,7 @@ const navbarStyle: SystemStyleObject = {
   justifyContent: "space-between",
   width: "full",
   height: {
-    base: NavbarHeight,
+    base: "navbar.height",
   },
   paddingX: "navbar.x",
   paddingY: "navbar.y",
@@ -68,7 +67,7 @@ const navbarStyle: SystemStyleObject = {
 // TODO move all the spacing stuff into a variants location
 const mainContentStyle: SystemStyleObject = {
   position: "fixed",
-  top: NavbarHeight,
+  top: "navbar.height",
   left: "0",
   right: "0",
   bottom: {

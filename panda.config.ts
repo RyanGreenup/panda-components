@@ -4,6 +4,7 @@ import pandaPreset from "@pandacss/preset-panda";
 import { articleRecipe } from "~/recipes/article.recipe";
 import { treeRecipe } from "~/components/Tree/tree.recipe";
 import myPreset from "./src/presets/daisy";
+import layoutPreset from "~/presets/layout";
 
 export default defineConfig({
   // Whether to use css reset
@@ -21,7 +22,7 @@ export default defineConfig({
 
   // Files to exclude
   exclude: [],
-  presets: [pandaPreset, myPreset],
+  presets: [pandaPreset, myPreset, layoutPreset],
 
   // Useful for theme customization
   theme: {

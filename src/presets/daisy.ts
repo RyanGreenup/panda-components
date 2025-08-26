@@ -21,10 +21,6 @@ const spacing = {
     y: { value: "0.75rem" },
   },
 };
-const sizes = {
-  ...spacing,
-};
-
 const myPreset = definePreset({
   name: "my-preset",
   presets: [pandaPreset],
@@ -32,7 +28,6 @@ const myPreset = definePreset({
     light: "[data-color-mode=light] &",
     dark: "[data-color-mode=dark] &",
     synthwaveTheme: "[data-theme=synthwave] &",
-    navbarToggle: "[data-peer=navbar]:checked ~ &",
   },
   globalCss: {
     "html, body": {
@@ -53,9 +48,6 @@ const myPreset = definePreset({
     },
     recipes: {
       article: articleRecipe,
-    },
-    slotRecipes: {
-      layout: layout,
     },
     semanticTokens: {
       colors: {
