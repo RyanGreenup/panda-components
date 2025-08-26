@@ -13,8 +13,14 @@ export const Navbar = (props: JSX.IntrinsicElements["nav"]) => {
   return <nav {...restProps} class={cx(layout().navbar, className)} />;
 };
 
+// Create styled components that apply recipe classes directly
+export const MainContent = (props: JSX.IntrinsicElements["div"]) => {
+  const { class: className, ...restProps } = props;
+  return <div {...restProps} class={cx(layout().mainContent, className)} />;
+};
 
 // Export as a namespace for cleaner imports
 export const LayoutComponents = {
   Navbar,
+  MainContent,
 };

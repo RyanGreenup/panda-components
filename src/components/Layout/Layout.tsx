@@ -625,7 +625,9 @@ export default function Layout(props: LayoutProps) {
         />
       </Sidebar>
 
-      <MainContent ref={mainContentRef}>{props.children}</MainContent>
+      <LayoutComponents.MainContent ref={mainContentRef}>
+        {props.children}
+      </LayoutComponents.MainContent>
 
       <BottomDash>
         <BottomNavLink href="/">Home</BottomNavLink>

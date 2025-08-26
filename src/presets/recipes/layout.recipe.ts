@@ -1,7 +1,19 @@
-import { defineRecipe, defineSlotRecipe } from "@pandacss/dev";
+import {
+  defineRecipe,
+  defineSlotRecipe,
+  SystemStyleObject,
+} from "@pandacss/dev";
+import { css } from "vinxi/dist/types/lib/plugins/css";
 
 // TODO Refactor into tokens
 const NavbarHeight = "4rem";
+const BottomDashHeight = "4rem";
+const SidebarWidth = "20rem"; // 20rem 320px - wider for desktop sidebar
+export const SidebarWidthPx = 320;
+const sidebarWidthVar = "--sidebar-width";
+const sidebarWidthVarWrapped = `var(${sidebarWidthVar}, 20rem)`;
+const ResizeHandleWidth = "8px"; // Standard resize handle width
+const ScrollbarWidth = "8px"; // Standard scrollbar width
 
 // TODO Refactor into tokens
 
@@ -32,33 +44,73 @@ const transitions = {
   },
 } as const;
 
+// TODO refactor into tokens
+const NavbarPX = "4";
+const NavbarPy = "3";
+
+const navbarStyle: SystemStyleObject = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  width: "full",
+  height: {
+    base: NavbarHeight,
+  },
+  paddingX: NavbarPX,
+  paddingY: NavbarPy,
+  backgroundColor: "base.200",
+  borderBottom: "default",
+  boxShadow: "sm",
+  transition: transitions.strings.layoutTransform,
+  _navbarToggle: {
+    transform: "translateY(-100%)",
+  },
+  // Style the internal content
+  gap: "4",
+};
+
+// TODO move all the spacing stuff into a variants location
+const mainContentStyle: SystemStyleObject = {
+  position: "fixed",
+  top: NavbarHeight,
+  left: "0",
+  right: "0",
+  bottom: {
+    base: BottomDashHeight,
+    sm: "0",
+  },
+  backgroundColor: "base.100",
+  overflow: "auto",
+  transition: transitions.strings.layoutAll,
+  // Adjust for hidden navbar
+  _navbarToggle: {
+    top: "0",
+  },
+  // Adjust for hidden bottom dash - extends to full height on mobile
+  _bottomDashToggle: {
+    bottom: {
+      base: "0",
+      sm: "0",
+    },
+  },
+  // On desktop: adjust for visible sidebar
+  md: {
+    _drawerToggle: {
+      left: sidebarWidthVarWrapped,
+    },
+  },
+  // Disable transitions when resizing
+  "&[data-resizing=true]": {
+    transition: "none",
+  },
+};
 
 export const layout = defineSlotRecipe({
   className: "layout",
   description: "Responsive Sidebar Layout",
-  slots: ["navbar"],
+  slots: ["navbar", "mainContent"],
   base: {
-    navbar: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      width: "full",
-      height: {
-        base: NavbarHeight,
-      },
-      paddingX: "4",
-      paddingY: "3",
-      backgroundColor: "base.200",
-      borderBottom: "default",
-      boxShadow: "sm",
-      transition: transitions.strings.layoutTransform,
-      _navbarToggle: {
-        transform: "translateY(-100%)",
-      },
-      // Style the internal content
-      gap: "4",
-    },
+    navbar: navbarStyle,
+    mainContent: mainContentStyle,
   },
-  variants: {},
-  defaultVariants: {},
 });
