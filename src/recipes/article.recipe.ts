@@ -27,7 +27,13 @@ export const articleRecipe = defineRecipe({
     color: "base.content",
     backgroundColor: "base.100",
 
-    // Headings
+    // Headings - Common styles
+    "& h1, & h2, & h3, & h4, & h5, & h6": {
+      color: "base.content",
+      fontWeight: "600",
+      lineHeight: "1.4",
+    },
+
     "& h1": {
       fontSize: {
         base: "2.25rem",
@@ -38,7 +44,6 @@ export const articleRecipe = defineRecipe({
       lineHeight: "1.2",
       marginTop: "0",
       marginBottom: "2rem",
-      color: "base.content",
     },
 
     "& h2": {
@@ -51,7 +56,6 @@ export const articleRecipe = defineRecipe({
       lineHeight: "1.3",
       marginTop: "3rem",
       marginBottom: "1.5rem",
-      color: "base.content",
     },
 
     "& h3": {
@@ -60,11 +64,40 @@ export const articleRecipe = defineRecipe({
         md: "1.625rem",
         lg: "1.75rem",
       },
-      fontWeight: "600",
-      lineHeight: "1.4",
       marginTop: "2.5rem",
       marginBottom: "1rem",
-      color: "base.content",
+    },
+
+    "& h4": {
+      fontSize: {
+        base: "1.25rem",
+        md: "1.375rem",
+        lg: "1.5rem",
+      },
+      marginTop: "2rem",
+      marginBottom: "0.75rem",
+    },
+
+    "& h5": {
+      fontSize: {
+        base: "1.125rem",
+        md: "1.25rem",
+        lg: "1.375rem",
+      },
+      fontWeight: "500",
+      marginTop: "1.75rem",
+      marginBottom: "0.5rem",
+    },
+
+    "& h6": {
+      fontSize: {
+        base: "1rem",
+        md: "1.125rem",
+        lg: "1.25rem",
+      },
+      fontWeight: "500",
+      marginTop: "1.5rem",
+      marginBottom: "0.5rem",
     },
 
     // Paragraphs
