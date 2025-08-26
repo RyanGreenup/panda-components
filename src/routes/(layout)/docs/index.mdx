@@ -3,7 +3,7 @@ import { CardExample } from "~/components/Examples/Card";
 import { ButtonExample } from "~/components/Examples/Button";
 import { CalloutExample } from "~/components/Examples/Callout";
 import { CollapsibleExample } from "~/components/Examples/Collapsible";
-
+import Tree from "~/components/Tree/Tree";
 import {Callout} from "~/components/Callout";
 import {Collapsible} from "~/components/Collapsible";
 
@@ -77,3 +77,39 @@ The Callout component provides contextual messages with different severity level
 <CalloutExample />
 </Collapsible>
 
+### Tree
+
+#### Overview
+
+##### Styling
+
+I've styled this as a recipe. I'm not sure if I want to do that though:
+
+  - Pros
+    - Style can be modified with Variants
+      - Unlike `cva` it can also be packaged with the preset (and Hence layout)
+    - I still get LSP
+  - Cons
+    - It seems a bit more complex to import etc.
+    - No JS variants
+      - Although this is already handled by `data-` attributes
+
+
+##### Problems
+###### Animations
+
+I cannot get this animated for `lazy` loaded data. I'll need to review the correct approach
+
+###### Cut / Paste / CRUD
+- Rename could be implemented with an `<input` that is hidden by default
+- How would I cut and Paste?
+###### Drag and Drop
+
+`solid-dnd` maybe
+
+###### Styling
+The styling probably needs to be reviewed to be honest
+
+#### Example
+
+<Tree/>
