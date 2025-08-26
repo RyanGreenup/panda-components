@@ -3,14 +3,13 @@ import MyPreset from "./src/presets/daisy";
 import pandaPreset from "@pandacss/preset-panda";
 import { articleRecipe } from "~/recipes/article.recipe";
 import { treeRecipe } from "~/components/Tree/tree.recipe";
+import myPreset from "./src/presets/daisy";
 
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
 
   jsxFramework: "solid",
-
-
 
   // Where to look for your css declarations
   include: [
@@ -22,13 +21,13 @@ export default defineConfig({
 
   // Files to exclude
   exclude: [],
-  presets: [MyPreset, pandaPreset],
+  presets: [pandaPreset, myPreset],
 
   // Useful for theme customization
   theme: {
     extend: {
       recipes: {
-        tree: treeRecipe
+        tree: treeRecipe,
       },
     },
   },

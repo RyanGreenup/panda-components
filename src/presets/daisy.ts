@@ -15,7 +15,17 @@ const defaultTheme = LightTheme;
 
 const backgroundTransition = "background-color 0.2s ease, color 0.2s ease";
 
-export default definePreset({
+const spacing = {
+  navbar: {
+    x: { value: "1rem" },
+    y: { value: "0.75rem" },
+  },
+};
+const sizes = {
+  ...spacing,
+};
+
+const myPreset = definePreset({
   name: "my-preset",
   presets: [pandaPreset],
   conditions: {
@@ -36,14 +46,17 @@ export default definePreset({
     },
   },
   theme: {
+    extend: {
+      tokens: {
+        spacing,
+      },
+    },
     recipes: {
       article: articleRecipe,
     },
     slotRecipes: {
       layout: layout,
     },
-    tokens: {},
-
     semanticTokens: {
       colors: {
         // Base color system with dark mode
@@ -425,3 +438,5 @@ export default definePreset({
     },
   },
 });
+
+export default myPreset;

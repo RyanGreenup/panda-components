@@ -44,10 +44,6 @@ const transitions = {
   },
 } as const;
 
-// TODO refactor into tokens
-const NavbarPX = "4";
-const NavbarPy = "3";
-
 const navbarStyle: SystemStyleObject = {
   display: "flex",
   alignItems: "center",
@@ -56,8 +52,8 @@ const navbarStyle: SystemStyleObject = {
   height: {
     base: NavbarHeight,
   },
-  paddingX: NavbarPX,
-  paddingY: NavbarPy,
+  paddingX: "navbar.x",
+  paddingY: "navbar.y",
   backgroundColor: "base.200",
   borderBottom: "default",
   boxShadow: "sm",
