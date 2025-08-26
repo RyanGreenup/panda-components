@@ -13,6 +13,7 @@ const sidebarWidthVar = "--sidebar-width";
 const sidebarWidthVarWrapped = `var(${sidebarWidthVar}, 20rem)`;
 const ResizeHandleWidth = "8px"; // Standard resize handle width
 const ScrollbarWidth = "8px"; // Standard scrollbar width
+const NavbarHeight = "4rem";
 
 // TODO Refactor into tokens
 
@@ -126,13 +127,68 @@ const BottomDashSty: SystemStyleObject = {
   },
 };
 
+/**
+ * Shared base styles for drawer-related positioned elements
+ */
+export const drawerElementBase: SystemStyleObject = {
+  position: "fixed",
+  top: NavbarHeight,
+  left: "0",
+  bottom: {
+    base: BottomDashHeight,
+    sm: "0",
+  },
+  transition: transitions.strings.layoutAll,
+  "[data-peer=navbar]:checked ~ &": {
+    top: "0",
+  },
+  "[data-peer=bottomdash]:checked ~ &": {
+    bottom: {
+      base: "0",
+      sm: "0",
+    },
+  },
+} as const;
+
+const SidebarSty: SystemStyleObject = {
+  ...drawerElementBase,
+  position: "fixed", // Keep fixed positioning
+  width: {
+    base: SidebarWidth,
+    md: sidebarWidthVarWrapped, // Use CSS variable on desktop
+  },
+  backgroundColor: "base.200",
+  borderRight: "default",
+  boxShadow: {
+    base: "lg", // Mobile: shadow over content
+    md: "none", // Desktop: no shadow when beside content
+  },
+  zIndex: {
+    base: "50", // Mobile: over content
+    md: "10", // Desktop: below overlays but above content
+  },
+  transform: "translateX(-100%)",
+  "[data-peer=drawer]:checked ~ &": {
+    transform: "translateX(0)",
+  },
+  // Conditional transitions
+  "&[data-resizing=true]": {
+    transition: "transform 0.3s ease, top 0.3s ease, bottom 0.3s ease", // Keep transform, top and bottom, remove width during resize
+  },
+  "&:not([data-resizing=true])": {
+    transition:
+      "transform 0.3s ease, width 0.2s ease, top 0.3s ease, bottom 0.3s ease", // All transitions when not resizing
+  },
+};
+
 export const layout = defineSlotRecipe({
   className: "layout",
   description: "Responsive Sidebar Layout",
-  slots: ["navbar", "mainContent", "bottomDash"],
+  slots: ["navbar", "mainContent", "bottomDash", "sidebar"],
   base: {
     navbar: navbarStyle,
     mainContent: mainContentStyle,
     bottomDash: BottomDashSty,
+    sidebar: SidebarSty,
   },
 });

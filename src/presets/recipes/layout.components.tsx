@@ -22,11 +22,18 @@ export const MainContent = (props: JSX.IntrinsicElements["div"]) => {
 // TODO run the layout() once
 export const BottomDash = (props: JSX.IntrinsicElements["div"]) => {
   const { class: className, ...restProps } = props;
-  return <div {...restProps} class={cx(layout().bottomDash)} />;
+  return <div {...restProps} class={cx(layout().bottomDash, className)} />;
 };
+
+export const Sidebar = (props: JSX.IntrinsicElements["div"]) => {
+  const { class: className, ...restProps } = props;
+  return <div {...restProps} class={cx(layout().sidebar, className)} />;
+};
+
 // Export as a namespace for cleaner imports
 export const LayoutComponents = {
   Navbar,
   MainContent,
   BottomDash,
+  Sidebar,
 };

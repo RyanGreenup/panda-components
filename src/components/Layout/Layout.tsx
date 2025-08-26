@@ -7,8 +7,10 @@ import {
   Navbar,
   MainContent,
   BottomDash,
+  Sidebar,
 } from "~/presets/recipes/layout.components";
 import { layout } from "../../../styled-system/recipes";
+import { drawerElementBase } from "~/presets/recipes/layout.recipe";
 
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
@@ -52,29 +54,6 @@ const transitions = {
     // Combined transitions for complex elements
     drawerSlide: "transform 0.3s ease, all 0.3s ease",
     overlayFade: "all 0.3s ease",
-  },
-} as const;
-
-/**
- * Shared base styles for drawer-related positioned elements
- */
-const drawerElementBase = {
-  position: "fixed",
-  top: NavbarHeight,
-  left: "0",
-  bottom: {
-    base: BottomDashHeight,
-    sm: "0",
-  },
-  transition: transitions.strings.layoutAll,
-  "[data-peer=navbar]:checked ~ &": {
-    top: "0",
-  },
-  "[data-peer=bottomdash]:checked ~ &": {
-    bottom: {
-      base: "0",
-      sm: "0",
-    },
   },
 } as const;
 
@@ -187,40 +166,6 @@ const Overlay = styled("label", {
     "[data-peer=drawer]:checked ~ &": {
       opacity: "1",
       visibility: "visible",
-    },
-  },
-});
-
-const Sidebar = styled("div", {
-  base: {
-    ...drawerElementBase,
-    position: "fixed", // Keep fixed positioning
-    width: {
-      base: SidebarWidth,
-      md: sidebarWidthVarWrapped, // Use CSS variable on desktop
-    },
-    backgroundColor: "base.200",
-    borderRight: "default",
-    boxShadow: {
-      base: "lg", // Mobile: shadow over content
-      md: "none", // Desktop: no shadow when beside content
-    },
-    zIndex: {
-      base: "50", // Mobile: over content
-      md: "10", // Desktop: below overlays but above content
-    },
-    transform: "translateX(-100%)",
-    ...drawerVisibilityStates,
-    "[data-peer=drawer]:checked ~ &": {
-      transform: "translateX(0)",
-    },
-    // Conditional transitions
-    "&[data-resizing=true]": {
-      transition: "transform 0.3s ease, top 0.3s ease, bottom 0.3s ease", // Keep transform, top and bottom, remove width during resize
-    },
-    "&:not([data-resizing=true])": {
-      transition:
-        "transform 0.3s ease, width 0.2s ease, top 0.3s ease, bottom 0.3s ease", // All transitions when not resizing
     },
   },
 });
