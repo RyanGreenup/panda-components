@@ -183,14 +183,33 @@ const SidebarSty: SystemStyleObject = {
   },
 };
 
+const OverlaySty: SystemStyleObject = {
+  ...drawerElementBase,
+  right: "0",
+  backgroundColor: "black/50",
+  zIndex: "40",
+  opacity: "0",
+  visibility: "hidden",
+  cursor: "pointer",
+  display: {
+    base: "block", // Mobile: show overlay
+    md: "none", // Desktop: no overlay needed
+  },
+  "[data-peer=drawer]:checked ~ &": {
+    opacity: "1",
+    visibility: "visible",
+  },
+};
+
 export const layout = defineSlotRecipe({
   className: "layout",
   description: "Responsive Sidebar Layout",
-  slots: ["navbar", "mainContent", "bottomDash", "sidebar"],
+  slots: ["navbar", "mainContent", "bottomDash", "sidebar", "overlay"],
   base: {
     navbar: navbarStyle,
     mainContent: mainContentStyle,
     bottomDash: BottomDashSty,
     sidebar: SidebarSty,
+    overlay: OverlaySty,
   },
 });

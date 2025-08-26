@@ -30,10 +30,16 @@ export const Sidebar = (props: JSX.IntrinsicElements["div"]) => {
   return <div {...restProps} class={cx(layout().sidebar, className)} />;
 };
 
+export const Overlay = (props: JSX.IntrinsicElements["label"]) => {
+  const { class: cls, ...restProps } = props;
+  return <label {...restProps} class={cx(layout().overlay, cls)} />;
+};
+
 // Export as a namespace for cleaner imports
 export const LayoutComponents = {
   Navbar,
   MainContent,
   BottomDash,
   Sidebar,
+  Overlay,
 };

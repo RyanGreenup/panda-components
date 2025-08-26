@@ -8,6 +8,7 @@ import {
   MainContent,
   BottomDash,
   Sidebar,
+  Overlay,
 } from "~/presets/recipes/layout.components";
 import { layout } from "../../../styled-system/recipes";
 import { drawerElementBase } from "~/presets/recipes/layout.recipe";
@@ -145,27 +146,6 @@ const HamburgerIcon = styled("div", {
       "& span:nth-child(3)": {
         transform: "rotate(-45deg) translate(7px, -6px)",
       },
-    },
-  },
-});
-
-const Overlay = styled("label", {
-  base: {
-    ...drawerElementBase,
-    right: "0",
-    backgroundColor: "blackAlpha.500",
-    zIndex: "40",
-    opacity: "0",
-    visibility: "hidden",
-    cursor: "pointer",
-    display: {
-      base: "block", // Mobile: show overlay
-      md: "none", // Desktop: no overlay needed
-    },
-    ...drawerVisibilityStates,
-    "[data-peer=drawer]:checked ~ &": {
-      opacity: "1",
-      visibility: "visible",
     },
   },
 });
