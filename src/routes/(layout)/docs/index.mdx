@@ -3,7 +3,6 @@ import { CardExample } from "~/components/Examples/Card";
 import { ButtonExample } from "~/components/Examples/Button";
 import { CalloutExample } from "~/components/Examples/Callout";
 import { CollapsibleExample } from "~/components/Examples/Collapsible";
-import Tree from "~/components/Tree/Tree";
 import {Callout} from "~/components/Callout";
 import {Collapsible} from "~/components/Collapsible";
 
@@ -22,94 +21,21 @@ The docs are in MDX, for example we can include components like a counter:
 <Counter />
 
 
-## Keyboard Shortcuts
-
-The application includes several keyboard shortcuts for improved navigation and accessibility:
-
-### Layout Controls
-
-- **`Ctrl + B`** - Toggle the sidebar/drawer
-- **`Escape`** - Close the sidebar/drawer
-- **`Ctrl + M`** - Toggle navbar visibility
-- **`Alt + D`** - Toggle bottom dash visibility
-
-### Sidebar Resizing (Desktop only)
-
-- **`Ctrl + ]`** - Increase sidebar width (+100px)
-- **`Ctrl + [`** - Decrease sidebar width (-100px)
-- **`Ctrl + Shift + 0`** - Reset sidebar to default width (320px)
-
-<Callout type="info">
-The sidebar can also be resized by dragging the resize handle on the right edge of the sidebar (desktop only).
-</Callout>
 
 
 ## Components to Refactor into Stories
 
+The following components have been implemented:
 
 <Callout type="note">
 We are not using Story book as I need exemplars of Solid Start Server Side functions with `createAsync` (maybe `createResource`), `query` and `Suspense`
 </Callout>
 
 
-### Card Component
-
-The Card component provides a flexible container with multiple variants:
-
-<Collapsible title="Example">
-<CardExample />
-</Collapsible>
-
-### Button Component
-
-The Button component offers multiple variants, sizes, and states:
-
-<Collapsible title="Example">
-<ButtonExample />
-</Collapsible>
 
 
-### Callout Component
-
-The Callout component provides contextual messages with different severity levels:
-
-<Collapsible title="Example">
-<CalloutExample />
-</Collapsible>
-
-### Tree
-
-#### Overview
-
-##### Styling
-
-I've styled this as a recipe. I'm not sure if I want to do that though:
-
-  - Pros
-    - Style can be modified with Variants
-      - Unlike `cva` it can also be packaged with the preset (and Hence layout)
-    - I still get LSP
-  - Cons
-    - It seems a bit more complex to import etc.
-    - No JS variants
-      - Although this is already handled by `data-` attributes
-
-
-##### Problems
-###### Animations
-
-I cannot get this animated for `lazy` loaded data. I'll need to review the correct approach
-
-###### Cut / Paste / CRUD
-- Rename could be implemented with an `<input` that is hidden by default
-- How would I cut and Paste?
-###### Drag and Drop
-
-`solid-dnd` maybe
-
-###### Styling
-The styling probably needs to be reviewed to be honest
-
-#### Example
-
-<Tree/>
+  - [Tree](docs/tree)
+  - [Card](docs/card)
+  - [Layout](docs/layout)
+  - [Button](docs/button)
+  - [Callout](docs/callout)
