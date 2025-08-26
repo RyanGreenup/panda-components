@@ -182,18 +182,6 @@ const bottomButtonBase = {
 const BottomDrawerButton = styled("label", { base: bottomButtonBase });
 const BottomNavButton = styled("label", { base: bottomButtonBase });
 
-const SidebarContent = styled("div", {
-  base: {
-    padding: "6",
-    mr: {
-      base: "0", // Full width on mobile
-      md: ResizeHandleWidth, // Leave space for resize handle on desktop
-    },
-    height: "full",
-    overflow: "auto",
-  },
-});
-
 const SidebarHeader = styled("div", {
   base: {
     fontSize: "xl",
@@ -461,28 +449,26 @@ export default function Layout(props: LayoutProps) {
 
       <Overlay for={ToggleIds.drawer} />
       <Sidebar ref={sidebarRef}>
-        <SidebarContent>
-          <SidebarHeader>
-            Menu
-            <CloseButton for={ToggleIds.drawer}>
-              <span>✕</span>
-            </CloseButton>
-          </SidebarHeader>
-          <SidebarNav>
-            <SidebarNavLink href="/">Home</SidebarNavLink>
-            <SidebarNavLink href="/docs">Documentation</SidebarNavLink>
-            <SidebarNavLink href="/components">Components</SidebarNavLink>
-            <SidebarNavLink href="/examples">Examples</SidebarNavLink>
-            <SidebarNavLink href="/about">About</SidebarNavLink>
-            <SidebarNavButton for={ToggleIds.navbar}>
-              Toggle Navbar
-            </SidebarNavButton>
-            <SidebarNavButton for={ToggleIds.bottomDash}>
-              Toggle Bottom Dash
-            </SidebarNavButton>
-            <DummySidebarContent />
-          </SidebarNav>
-        </SidebarContent>
+        <SidebarHeader>
+          Menu
+          <CloseButton for={ToggleIds.drawer}>
+            <span>✕</span>
+          </CloseButton>
+        </SidebarHeader>
+        <SidebarNav>
+          <SidebarNavLink href="/">Home</SidebarNavLink>
+          <SidebarNavLink href="/docs">Documentation</SidebarNavLink>
+          <SidebarNavLink href="/components">Components</SidebarNavLink>
+          <SidebarNavLink href="/examples">Examples</SidebarNavLink>
+          <SidebarNavLink href="/about">About</SidebarNavLink>
+          <SidebarNavButton for={ToggleIds.navbar}>
+            Toggle Navbar
+          </SidebarNavButton>
+          <SidebarNavButton for={ToggleIds.bottomDash}>
+            Toggle Bottom Dash
+          </SidebarNavButton>
+          <DummySidebarContent />
+        </SidebarNav>
         <ResizeHandle
           onMouseDown={handleMouseDown}
           onTouchStart={handleMouseDown}

@@ -14,6 +14,7 @@ const sidebarWidthVarWrapped = `var(${sidebarWidthVar}, 20rem)`;
 const ResizeHandleWidth = "8px"; // Standard resize handle width
 const ScrollbarWidth = "8px"; // Standard scrollbar width
 const NavbarHeight = "4rem";
+const SidebarPadding = "6";
 
 const sidebarZIndex = {
   base: "50", // Mobile: over content
@@ -156,6 +157,7 @@ export const drawerElementBase: SystemStyleObject = {
 } as const;
 
 const SidebarSty: SystemStyleObject = {
+  // Layout
   ...drawerElementBase,
   position: "fixed", // Keep fixed positioning
   width: {
@@ -181,6 +183,15 @@ const SidebarSty: SystemStyleObject = {
     transition:
       "transform 0.3s ease, width 0.2s ease, top 0.3s ease, bottom 0.3s ease", // All transitions when not resizing
   },
+  // Adjust for the Handle
+  mr: {
+    base: "0", // Full width on mobile
+    md: ResizeHandleWidth, // Leave space for resize handle on desktop
+  },
+  // Content within the sidebar
+  padding: SidebarPadding,
+  height: "full",
+  overflow: "auto",
 };
 
 const OverlaySty: SystemStyleObject = {
