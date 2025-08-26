@@ -599,11 +599,12 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <div>
-      <NavbarToggle type="checkbox" ref={navbarRef} data-peer="navbar" />
+      <NavbarToggle type="checkbox" ref={navbarRef} data-peer="navbar" id="navbar-toggle" />
       <BottomDashToggle
         type="checkbox"
         ref={bottomDashRef}
         data-peer="bottomdash"
+        id="bottomdash-toggle"
       />
       <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" id="drawer-toggle" />
       <Navbar>
@@ -639,10 +640,10 @@ export default function Layout(props: LayoutProps) {
             <SidebarNavLink href="/components">Components</SidebarNavLink>
             <SidebarNavLink href="/examples">Examples</SidebarNavLink>
             <SidebarNavLink href="/about">About</SidebarNavLink>
-            <SidebarNavButton onClick={toggleNavbar}>
+            <SidebarNavButton for="navbar-toggle">
               Toggle Navbar
             </SidebarNavButton>
-            <SidebarNavButton onClick={toggleBottomDash}>
+            <SidebarNavButton for="bottomdash-toggle">
               Toggle Bottom Dash
             </SidebarNavButton>
             <DummySidebarContent />
@@ -658,7 +659,7 @@ export default function Layout(props: LayoutProps) {
         <BottomNavLink href="/docs">Docs</BottomNavLink>
         <BottomNavLink href="/components">Components</BottomNavLink>
         <BottomNavLink href="/examples">Examples</BottomNavLink>
-        <BottomNavButton onClick={toggleNavbar}>Nav</BottomNavButton>
+        <BottomNavButton for="navbar-toggle">Nav</BottomNavButton>
         <BottomDrawerButton for="drawer-toggle">
           <HamburgerIcon>
             <span></span>
