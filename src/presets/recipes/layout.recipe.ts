@@ -15,6 +15,11 @@ const ResizeHandleWidth = "8px"; // Standard resize handle width
 const ScrollbarWidth = "8px"; // Standard scrollbar width
 const NavbarHeight = "4rem";
 
+const sidebarZIndex = {
+  base: "50", // Mobile: over content
+  md: "10", // Desktop: below overlays but above content
+};
+
 // TODO Refactor into tokens
 
 /**
@@ -163,10 +168,7 @@ const SidebarSty: SystemStyleObject = {
     base: "lg", // Mobile: shadow over content
     md: "none", // Desktop: no shadow when beside content
   },
-  zIndex: {
-    base: "50", // Mobile: over content
-    md: "10", // Desktop: below overlays but above content
-  },
+  zIndex: sidebarZIndex,
   transform: "translateX(-100%)",
   "[data-peer=drawer]:checked ~ &": {
     transform: "translateX(0)",
