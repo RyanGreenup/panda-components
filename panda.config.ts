@@ -2,12 +2,15 @@ import { defineConfig } from "@pandacss/dev";
 import MyPreset from "./src/presets/daisy";
 import pandaPreset from "@pandacss/preset-panda";
 import { articleRecipe } from "~/recipes/article.recipe";
+import { treeRecipe } from "~/components/Tree/tree.recipe";
 
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
 
   jsxFramework: "solid",
+
+
 
   // Where to look for your css declarations
   include: [
@@ -26,6 +29,7 @@ export default defineConfig({
     extend: {
       recipes: {
         article: articleRecipe,
+        tree: treeRecipe
       },
     },
   },
