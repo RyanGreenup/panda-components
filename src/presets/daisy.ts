@@ -5,6 +5,7 @@ import LightTheme from "./themes/light";
 import night from "./themes/night";
 import synthwave from "./themes/synthwave";
 import { articleRecipe } from "./recipes/article.recipe";
+import { layout } from "./recipes/layout.recipe";
 
 const prefersDarkTheme = dracula;
 const darkTheme = night;
@@ -21,6 +22,7 @@ export default definePreset({
     light: "[data-color-mode=light] &",
     dark: "[data-color-mode=dark] &",
     synthwaveTheme: "[data-theme=synthwave] &",
+    navbarToggle: "[data-peer=navbar]:checked ~ &",
   },
   globalCss: {
     "html, body": {
@@ -36,6 +38,9 @@ export default definePreset({
   theme: {
     recipes: {
       article: articleRecipe,
+    },
+    slotRecipes: {
+      layout: layout,
     },
     tokens: {},
 

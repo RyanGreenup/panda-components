@@ -3,6 +3,8 @@ import { styled } from "../../../styled-system/jsx";
 import { center } from "../../../styled-system/patterns";
 import { createKeybinding, useKeybinding } from "./hooks/useKeybinding";
 import { useResizeHandle } from "./hooks/useResizeHandle";
+import { LayoutComponents, Navbar } from "~/presets/recipes/layout.components";
+import { layout } from "../../../styled-system/recipes";
 
 const NavbarHeight = "4rem";
 const BottomDashHeight = "4rem";
@@ -16,7 +18,7 @@ const ScrollbarWidth = "8px"; // Standard scrollbar width
 // Toggle IDs - centralized to prevent typos and ensure consistency
 const ToggleIds = {
   drawer: "drawer-toggle",
-  navbar: "navbar-toggle", 
+  navbar: "navbar-toggle",
   bottomDash: "bottomdash-toggle",
 } as const;
 const zIndices = {
@@ -93,35 +95,6 @@ const buttonBase = {
     backgroundColor: "base.300",
   },
 } as const;
-
-const Navbar = styled("nav", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "full",
-    height: {
-      base: NavbarHeight,
-    },
-    paddingX: "4",
-    paddingY: "3",
-    backgroundColor: "base.200",
-    borderBottom: "default",
-    boxShadow: "sm",
-    transition: transitions.strings.layoutTransform,
-    "[data-peer=navbar]:checked ~ &": {
-      transform: "translateY(-100%)",
-    },
-  },
-});
-
-const NavbarGroup = styled("div", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    gap: "4",
-  },
-});
 
 const NavBrand = styled("div", {
   base: {
@@ -530,7 +503,6 @@ export default function Layout(props: LayoutProps) {
     bottomDashRef.checked = !bottomDashRef.checked;
   };
 
-
   // Resize handle functionality
   const { width, isResizing, handleMouseDown, setWidth } = useResizeHandle({
     initialWidth: SidebarWidthPx,
@@ -588,25 +560,34 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <div>
-      <NavbarToggle type="checkbox" ref={navbarRef} data-peer="navbar" id={ToggleIds.navbar} />
+      <NavbarToggle
+        type="checkbox"
+        ref={navbarRef}
+        data-peer="navbar"
+        id={ToggleIds.navbar}
+      />
       <BottomDashToggle
         type="checkbox"
         ref={bottomDashRef}
         data-peer="bottomdash"
         id={ToggleIds.bottomDash}
       />
-      <DrawerToggle type="checkbox" ref={drawerRef} data-peer="drawer" id={ToggleIds.drawer} />
+      <DrawerToggle
+        type="checkbox"
+        ref={drawerRef}
+        data-peer="drawer"
+        id={ToggleIds.drawer}
+      />
+
       <Navbar>
-        <NavbarGroup>
-          <DrawerButton for={ToggleIds.drawer}>
-            <HamburgerIcon>
-              <span></span>
-              <span></span>
-              <span></span>
-            </HamburgerIcon>
-          </DrawerButton>
-          <NavBrand>Panda Components</NavBrand>
-        </NavbarGroup>
+        <DrawerButton for={ToggleIds.drawer}>
+          <HamburgerIcon>
+            <span></span>
+            <span></span>
+            <span></span>
+          </HamburgerIcon>
+        </DrawerButton>
+        <NavBrand>Panda Components</NavBrand>
         <NavLinks>
           <NavLink href="/">Home</NavLink>
           <NavLink href="/docs">Docs</NavLink>
@@ -638,7 +619,10 @@ export default function Layout(props: LayoutProps) {
             <DummySidebarContent />
           </SidebarNav>
         </SidebarContent>
-        <ResizeHandle onMouseDown={handleMouseDown} onTouchStart={handleMouseDown} />
+        <ResizeHandle
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleMouseDown}
+        />
       </Sidebar>
 
       <MainContent ref={mainContentRef}>{props.children}</MainContent>
