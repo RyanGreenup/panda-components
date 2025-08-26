@@ -39,6 +39,11 @@ export function CalloutExample() {
         that might have negative consequences.
       </Callout>
 
+      <Callout type="info">
+        This is an info callout. Use it for neutral informational content
+        that provides helpful context or details.
+      </Callout>
+
       <Callout type="note" title="Custom Title">
         You can override the default title by passing a custom title prop.
       </Callout>

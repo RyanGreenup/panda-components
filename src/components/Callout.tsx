@@ -72,6 +72,13 @@ const StyledCallout = styled("div", {
           backgroundColor: "error",
         },
       },
+      info: {
+        borderLeftColor: "info",
+        backgroundColor: "info/10",
+        "&::before": {
+          backgroundColor: "info",
+        },
+      },
     },
   },
   defaultVariants: {
@@ -102,6 +109,9 @@ const IconWrapper = styled("div", {
       },
       caution: {
         color: "error",
+      },
+      info: {
+        color: "info",
       },
     },
   },
@@ -154,6 +164,9 @@ const Title = styled("div", {
       caution: {
         color: "error",
       },
+      info: {
+        color: "info",
+      },
     },
   },
 });
@@ -164,6 +177,7 @@ const iconMap = {
   important: AlertCircle,
   warning: AlertTriangle,
   caution: XCircle,
+  info: Info,
 };
 
 const titleMap = {
@@ -172,10 +186,11 @@ const titleMap = {
   important: "Important",
   warning: "Warning",
   caution: "Caution",
+  info: "Info",
 };
 
 export interface CalloutProps extends ComponentProps<typeof StyledCallout> {
-  type?: "note" | "tip" | "important" | "warning" | "caution";
+  type?: "note" | "tip" | "important" | "warning" | "caution" | "info";
   title?: string;
   children: JSX.Element;
 }
