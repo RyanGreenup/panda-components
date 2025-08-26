@@ -27,40 +27,59 @@ export function useResizeHandle(options: UseResizeHandleOptions = {}) {
   let startX = 0;
   let startWidth = 0;
 
-  const handleMouseDown = (e: MouseEvent) => {
+  const handleStart = (e: MouseEvent | TouchEvent) => {
     if (isServer) return;
     
     e.preventDefault();
     setIsResizing(true);
-    startX = e.clientX;
+    
+    // Get the X coordinate from either mouse or touch event
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    startX = clientX;
     startWidth = width();
 
     onResizeStart?.();
 
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    // Add both mouse and touch listeners
+    document.addEventListener("mousemove", handleMove);
+    document.addEventListener("mouseup", handleEnd);
+    document.addEventListener("touchmove", handleMove, { passive: false });
+    document.addEventListener("touchend", handleEnd);
+    
     document.body.style.cursor = "col-resize";
     document.body.style.userSelect = "none";
+    // Prevent iOS bounce and text selection on mobile
+    document.body.style.webkitUserSelect = "none";
+    document.body.style.touchAction = "none";
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMove = (e: MouseEvent | TouchEvent) => {
     if (!isResizing()) return;
 
-    const deltaX = e.clientX - startX;
+    // Get the X coordinate from either mouse or touch event
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const deltaX = clientX - startX;
     const newWidth = Math.max(minWidth, Math.min(maxWidth, startWidth + deltaX));
 
     setWidth(newWidth);
     onResize?.(newWidth);
   };
 
-  const handleMouseUp = () => {
+  const handleEnd = () => {
     if (isServer) return;
     
     setIsResizing(false);
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
+    
+    // Remove both mouse and touch listeners
+    document.removeEventListener("mousemove", handleMove);
+    document.removeEventListener("mouseup", handleEnd);
+    document.removeEventListener("touchmove", handleMove);
+    document.removeEventListener("touchend", handleEnd);
+    
     document.body.style.cursor = "";
     document.body.style.userSelect = "";
+    document.body.style.webkitUserSelect = "";
+    document.body.style.touchAction = "";
 
     onResizeEnd?.();
   };
@@ -69,16 +88,23 @@ export function useResizeHandle(options: UseResizeHandleOptions = {}) {
   onCleanup(() => {
     if (isServer) return;
     
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
+    // Clean up all event listeners
+    document.removeEventListener("mousemove", handleMove);
+    document.removeEventListener("mouseup", handleEnd);
+    document.removeEventListener("touchmove", handleMove);
+    document.removeEventListener("touchend", handleEnd);
+    
+    // Reset all styles
     document.body.style.cursor = "";
     document.body.style.userSelect = "";
+    document.body.style.webkitUserSelect = "";
+    document.body.style.touchAction = "";
   });
 
   return {
     width,
     isResizing,
-    handleMouseDown,
+    handleMouseDown: handleStart,
     setWidth,
   };
 }
