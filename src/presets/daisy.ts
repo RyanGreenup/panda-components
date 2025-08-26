@@ -4,6 +4,7 @@ import dracula from "./themes/dracula";
 import LightTheme from "./themes/light";
 import night from "./themes/night";
 import synthwave from "./themes/synthwave";
+import { articleRecipe } from "./recipes/article.recipe";
 
 const prefersDarkTheme = dracula;
 const darkTheme = night;
@@ -33,6 +34,9 @@ export default definePreset({
     },
   },
   theme: {
+    recipes: {
+      article: articleRecipe,
+    },
     tokens: {},
 
     semanticTokens: {

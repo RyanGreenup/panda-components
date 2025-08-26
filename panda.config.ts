@@ -28,7 +28,6 @@ export default defineConfig({
   theme: {
     extend: {
       recipes: {
-        article: articleRecipe,
         tree: treeRecipe
       },
     },
