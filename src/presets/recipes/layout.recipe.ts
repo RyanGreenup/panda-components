@@ -19,6 +19,7 @@ const SidebarPadding = "6";
 const sidebarZIndex = {
   base: "50", // Mobile: over content
   md: "10", // Desktop: below overlays but above content
+  navbar: "60",
 };
 
 // TODO Refactor into tokens
@@ -61,14 +62,16 @@ const navbarStyle: SystemStyleObject = {
   paddingX: "navbar.x",
   paddingY: "navbar.y",
   backgroundColor: "base.200",
-  borderBottom: "default",
-  boxShadow: "sm",
   transition: transitions.strings.layoutTransform,
   _navbarToggle: {
     transform: "translateY(-100%)",
   },
   // Style the internal content
   gap: "4",
+  // Add a shadow
+  boxShadow: "lg",
+  position: "relative",
+  zIndex: sidebarZIndex.navbar,
 };
 
 // TODO move all the spacing stuff into a variants location
