@@ -270,7 +270,7 @@ const resizeHandleSty: SystemStyleObject = {
     base: "none", // Hidden on mobile
     md: "block", // Only show on desktop
   },
-  transition: "background-color 0.2s ease, right 0.3s ease",
+  transition: `background-color ${transitions.interactive.duration} ${transitions.interactive.easing}, right ${transitions.layout.duration} ${transitions.layout.easing}`,
   zIndex: zIndices.resizeHandle, // Above content
   // Position based on drawer state
   "[data-peer=drawer]:checked ~ * &": {
