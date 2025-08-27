@@ -261,7 +261,7 @@ const HamburgerIconSty: SystemStyleObject = {
 const resizeHandleSty: SystemStyleObject = {
   position: "absolute",
   top: "0",
-  right: "0",
+  right: "0", // Default position
   width: ResizeHandleWidth,
   height: "full",
   cursor: "col-resize",
@@ -270,8 +270,12 @@ const resizeHandleSty: SystemStyleObject = {
     base: "none", // Hidden on mobile
     md: "block", // Only show on desktop
   },
-  transition: "background-color 0.2s ease",
+  transition: "background-color 0.2s ease, right 0.3s ease",
   zIndex: zIndices.resizeHandle, // Above content
+  // Position based on drawer state
+  "[data-peer=drawer]:checked ~ * &": {
+    right: "-8px", // Move to edge when drawer is open
+  },
   _hover: {
     backgroundColor: "base.200",
     "&::before": {
