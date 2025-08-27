@@ -165,8 +165,6 @@ export const drawerElementBase: SystemStyleObject = {
 const SidebarSty: SystemStyleObject = {
   // Layout
   ...drawerElementBase,
-  // TODO can this be removed?
-  position: "fixed",
   width: {
     base: SidebarWidth,
     md: sidebarWidthVarWrapped, // Use CSS variable on desktop

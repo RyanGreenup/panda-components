@@ -376,11 +376,11 @@ export default function Layout(props: LayoutProps) {
             </SidebarNavButton>
             <DummySidebarContent />
           </SidebarNav>
-          <ResizeHandle
-            onMouseDown={handleMouseDown}
-            onTouchStart={handleMouseDown}
-          />
         </SidebarContent>
+        <ResizeHandle
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleMouseDown}
+        />
       </Sidebar>
 
       <MainContent ref={mainContentRef}>{props.children}</MainContent>
