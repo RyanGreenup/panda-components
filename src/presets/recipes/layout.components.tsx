@@ -11,20 +11,20 @@ const layoutClasses = layout();
 
 // Create styled components that apply recipe classes directly
 export const Navbar = (props: JSX.IntrinsicElements["nav"]) => {
-  const { class: className, ...restProps } = props;
-  return <nav {...restProps} class={cx(layout().navbar, className)} />;
+  const [local, others] = splitProps(props, ["class"]);
+  return <nav {...others} class={cx(layout().navbar, local.class)} />;
 };
 
 // Create styled components that apply recipe classes directly
 export const MainContent = (props: JSX.IntrinsicElements["div"]) => {
-  const { class: className, ...restProps } = props;
-  return <div {...restProps} class={cx(layout().mainContent, className)} />;
+  const [local, others] = splitProps(props, ["class"]);
+  return <div {...others} class={cx(layout().mainContent, local.class)} />;
 };
 
 // TODO run the layout() once
 export const BottomDash = (props: JSX.IntrinsicElements["div"]) => {
-  const { class: className, ...restProps } = props;
-  return <div {...restProps} class={cx(layout().bottomDash, className)} />;
+  const [local, others] = splitProps(props, ["class"]);
+  return <div {...others} class={cx(layout().bottomDash, local.class)} />;
 };
 
 export const Sidebar = (props: JSX.IntrinsicElements["div"]) => {
@@ -56,13 +56,13 @@ export const SidebarContent = (props: JSX.IntrinsicElements["div"]) => {
 };
 
 export const Overlay = (props: JSX.IntrinsicElements["label"]) => {
-  const { class: cls, ...restProps } = props;
-  return <label {...restProps} class={cx(layout().overlay, cls)} />;
+  const [local, others] = splitProps(props, ["class"]);
+  return <label {...others} class={cx(layout().overlay, local.class)} />;
 };
 
 export const SidebarHeader = (props: JSX.IntrinsicElements["div"]) => {
-  const { class: cls, ...restProps } = props;
-  return <div {...restProps} class={cx(layout().sidebarHeader, cls)} />;
+  const [local, others] = splitProps(props, ["class"]);
+  return <div {...others} class={cx(layout().sidebarHeader, local.class)} />;
 };
 
 // TODO should I just export this with
