@@ -28,8 +28,8 @@ export const BottomDash = (props: JSX.IntrinsicElements["div"]) => {
 };
 
 export const Sidebar = (props: JSX.IntrinsicElements["div"]) => {
-  const { class: className, ...restProps } = props;
-  return <div {...restProps} class={cx(layout().sidebar, className)} />;
+  const [local, others] = splitProps(props, ["class"])
+  return <div {...others} class={cx(layout().sidebar, local.class)} />;
 };
 
 export const Overlay = (props: JSX.IntrinsicElements["label"]) => {
