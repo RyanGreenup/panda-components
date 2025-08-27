@@ -28,8 +28,31 @@ export const BottomDash = (props: JSX.IntrinsicElements["div"]) => {
 };
 
 export const Sidebar = (props: JSX.IntrinsicElements["div"]) => {
-  const [local, others] = splitProps(props, ["class"])
-  return <div {...others} class={cx(layout().sidebar, local.class)} />;
+  const [local, others] = splitProps(props, ["class", "children"]);
+  const safeChildren = children(() => local.children);
+  // TODO Review this, do we want to have a fixed inner style?
+  // we need it though to pad for the handle
+  // return (
+  //   <div {...others} class={cx(layout().sidebar, local.class)}>
+  //     <div class={layout().sidebarContent}>{safeChildren()}</div>
+  //   </div>
+  // );
+
+  return (
+    <div {...others} class={cx(layout().sidebar, local.class)}>
+      {safeChildren()}
+    </div>
+  );
+};
+
+export const SidebarContent = (props: JSX.IntrinsicElements["div"]) => {
+  const [local, others] = splitProps(props, ["class", "children"]);
+  const safeChildren = children(() => local.children);
+  return (
+    <div {...others} class={cx(layout().sidebarContent, local.class)}>
+      {safeChildren()}
+    </div>
+  );
 };
 
 export const Overlay = (props: JSX.IntrinsicElements["label"]) => {
@@ -62,6 +85,11 @@ export const HamburgerIcon = (props: JSX.IntrinsicElements["div"]) => {
   );
 };
 
+export const ResizeHandle = (props: JSX.IntrinsicElements["div"]) => {
+  const [local, others] = splitProps(props, ["class"]);
+  return <div {...others} class={cx(layout().resizeHandle, local.class)} />;
+};
+
 // Export as a namespace for cleaner imports
 export const LayoutComponents = {
   Navbar,
@@ -70,4 +98,5 @@ export const LayoutComponents = {
   Sidebar,
   Overlay,
   HamburgerIcon,
+  ResizeHandle,
 };

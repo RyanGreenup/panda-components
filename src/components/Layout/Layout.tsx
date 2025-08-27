@@ -11,6 +11,8 @@ import {
   Overlay,
   SidebarHeader,
   HamburgerIcon,
+  SidebarContent,
+  ResizeHandle,
 } from "~/presets/recipes/layout.components";
 import { layout } from "../../../styled-system/recipes";
 import { drawerElementBase } from "~/presets/recipes/layout.recipe";
@@ -30,9 +32,6 @@ const ToggleIds = {
   navbar: "navbar-toggle",
   bottomDash: "bottomdash-toggle",
 } as const;
-const zIndices = {
-  resizeHandle: 20,
-};
 /**
  * Consistent Animation System - All transitions in one place for maintainability
  */
@@ -224,51 +223,6 @@ const DrawerToggleButton = (props: { drawerId: string }) => (
   </BottomDrawerButton>
 );
 
-const ResizeHandle = styled("div", {
-  base: {
-    position: "absolute",
-    top: "0",
-    right: "0",
-    width: ResizeHandleWidth,
-    height: "full",
-    cursor: "col-resize",
-    backgroundColor: "transparent",
-    display: {
-      base: "none", // Hidden on mobile
-      md: "block", // Only show on desktop
-    },
-    transition: "background-color 0.2s ease",
-    zIndex: zIndices.resizeHandle, // Above content
-    _hover: {
-      backgroundColor: "base.200",
-      "&::before": {
-        opacity: "1",
-        backgroundColor: "primary",
-        animation: "pulse 1s infinite",
-        transform: "translate(-50%, -50%) scale(3)",
-      },
-    },
-    _active: {
-      backgroundColor: "base.300",
-    },
-    // Resize Pill
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      borderRadius: "full",
-      opacity: "0.3",
-      transition: "opacity 0.2s ease, transform 0.3s ease-in-out",
-      pointerEvents: "none",
-      backgroundColor: "base.content",
-      width: "0.5",
-      height: "8",
-    },
-  },
-});
-
 interface LayoutProps {
   children?: any;
 }
@@ -401,30 +355,32 @@ export default function Layout(props: LayoutProps) {
 
       <Overlay for={ToggleIds.drawer} />
       <Sidebar ref={sidebarRef}>
-        <SidebarHeader>
-          Menu
-          <CloseButton for={ToggleIds.drawer}>
-            <span>✕</span>
-          </CloseButton>
-        </SidebarHeader>
-        <SidebarNav>
-          <SidebarNavLink href="/">Home</SidebarNavLink>
-          <SidebarNavLink href="/docs">Documentation</SidebarNavLink>
-          <SidebarNavLink href="/components">Components</SidebarNavLink>
-          <SidebarNavLink href="/examples">Examples</SidebarNavLink>
-          <SidebarNavLink href="/about">About</SidebarNavLink>
-          <SidebarNavButton for={ToggleIds.navbar}>
-            Toggle Navbar
-          </SidebarNavButton>
-          <SidebarNavButton for={ToggleIds.bottomDash}>
-            Toggle Bottom Dash
-          </SidebarNavButton>
-          <DummySidebarContent />
-        </SidebarNav>
-        <ResizeHandle
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleMouseDown}
-        />
+        <SidebarContent>
+          <SidebarHeader>
+            Menu
+            <CloseButton for={ToggleIds.drawer}>
+              <span>✕</span>
+            </CloseButton>
+          </SidebarHeader>
+          <SidebarNav>
+            <SidebarNavLink href="/">Home</SidebarNavLink>
+            <SidebarNavLink href="/docs">Documentation</SidebarNavLink>
+            <SidebarNavLink href="/components">Components</SidebarNavLink>
+            <SidebarNavLink href="/examples">Examples</SidebarNavLink>
+            <SidebarNavLink href="/about">About</SidebarNavLink>
+            <SidebarNavButton for={ToggleIds.navbar}>
+              Toggle Navbar
+            </SidebarNavButton>
+            <SidebarNavButton for={ToggleIds.bottomDash}>
+              Toggle Bottom Dash
+            </SidebarNavButton>
+            <DummySidebarContent />
+          </SidebarNav>
+          <ResizeHandle
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleMouseDown}
+          />
+        </SidebarContent>
       </Sidebar>
 
       <MainContent ref={mainContentRef}>{props.children}</MainContent>

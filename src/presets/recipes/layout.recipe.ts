@@ -16,6 +16,9 @@ const ScrollbarWidth = "8px"; // Standard scrollbar width
 const NavbarHeight = "4rem";
 const SidebarPadding = "6";
 
+const zIndices = {
+  resizeHandle: 20,
+};
 const sidebarZIndex = {
   base: "50", // Mobile: over content
   md: "10", // Desktop: below overlays but above content
@@ -162,7 +165,8 @@ export const drawerElementBase: SystemStyleObject = {
 const SidebarSty: SystemStyleObject = {
   // Layout
   ...drawerElementBase,
-  position: "fixed", // Keep fixed positioning
+  // TODO can this be removed?
+  position: "fixed",
   width: {
     base: SidebarWidth,
     md: sidebarWidthVarWrapped, // Use CSS variable on desktop
@@ -191,6 +195,9 @@ const SidebarSty: SystemStyleObject = {
     base: "0", // Full width on mobile
     md: ResizeHandleWidth, // Leave space for resize handle on desktop
   },
+};
+
+const sidebarContentSty: SystemStyleObject = {
   // Content within the sidebar
   padding: SidebarPadding,
   height: "full",
@@ -253,6 +260,49 @@ const HamburgerIconSty: SystemStyleObject = {
   },
 };
 
+const resizeHandleSty: SystemStyleObject = {
+  position: "absolute",
+  top: "0",
+  right: "0",
+  width: ResizeHandleWidth,
+  height: "full",
+  cursor: "col-resize",
+  backgroundColor: "transparent",
+  display: {
+    base: "none", // Hidden on mobile
+    md: "block", // Only show on desktop
+  },
+  transition: "background-color 0.2s ease",
+  zIndex: zIndices.resizeHandle, // Above content
+  _hover: {
+    backgroundColor: "base.200",
+    "&::before": {
+      opacity: "1",
+      backgroundColor: "primary",
+      animation: "pulse 1s infinite",
+      transform: "translate(-50%, -50%) scale(3)",
+    },
+  },
+  _active: {
+    backgroundColor: "base.300",
+  },
+  // Resize Pill
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "full",
+    opacity: "0.3",
+    transition: "opacity 0.2s ease, transform 0.3s ease-in-out",
+    pointerEvents: "none",
+    backgroundColor: "base.content",
+    width: "0.5",
+    height: "8",
+  },
+};
+
 export const layout = defineSlotRecipe({
   className: "layout",
   description: "Responsive Sidebar Layout",
@@ -260,18 +310,22 @@ export const layout = defineSlotRecipe({
     "navbar",
     "mainContent",
     "bottomDash",
+    "sidebarContent",
     "sidebar",
     "overlay",
     "sidebarHeader",
     "hamburgerIcon",
+    "resizeHandle",
   ],
   base: {
     navbar: navbarStyle,
     mainContent: mainContentStyle,
     bottomDash: BottomDashSty,
     sidebar: SidebarSty,
+    sidebarContent: sidebarContentSty,
     overlay: OverlaySty,
     sidebarHeader: SidebarHeaderSty,
     hamburgerIcon: HamburgerIconSty,
+    resizeHandle: resizeHandleSty,
   },
 });
