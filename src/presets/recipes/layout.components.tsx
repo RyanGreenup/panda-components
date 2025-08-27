@@ -3,9 +3,9 @@
  * Direct approach that works better with SolidStart
  */
 
-import { cx } from "../../../styled-system/css";
+import { children, JSX, splitProps } from "solid-js";
+import { cx, sva } from "../../../styled-system/css";
 import { layout } from "../../../styled-system/recipes/layout";
-import { JSX } from "solid-js";
 
 const layoutClasses = layout();
 
@@ -49,8 +49,17 @@ export const SidebarHeader = (props: JSX.IntrinsicElements["div"]) => {
 //   <span></span>
 // </HamburgerIcon>
 export const HamburgerIcon = (props: JSX.IntrinsicElements["div"]) => {
-  const { class: cls, ...restProps } = props;
-  return <div {...restProps} class={cx(layout().hamburgerIcon, cls)} />;
+  const [local, others] = splitProps(props, ["class", "children"]);
+  const safeChildren = children(() => local.children);
+
+  return (
+    <div {...others} class={cx(layout().hamburgerIcon, local.class)}>
+      <span></span>
+      <span></span>
+      <span></span>
+      {safeChildren()}
+    </div>
+  );
 };
 
 // Export as a namespace for cleaner imports

@@ -220,11 +220,7 @@ const SidebarNavButton = styled("label", {
 
 const DrawerToggleButton = (props: { drawerId: string }) => (
   <BottomDrawerButton for={props.drawerId}>
-    <HamburgerIcon>
-      <span></span>
-      <span></span>
-      <span></span>
-    </HamburgerIcon>
+    <HamburgerIcon />
   </BottomDrawerButton>
 );
 
@@ -393,11 +389,7 @@ export default function Layout(props: LayoutProps) {
 
       <Navbar>
         <DrawerButton for={ToggleIds.drawer}>
-          <HamburgerIcon>
-            <span></span>
-            <span></span>
-            <span></span>
-          </HamburgerIcon>
+          <HamburgerIcon />
         </DrawerButton>
         <NavBrand>Panda Components</NavBrand>
         <NavLinks>
@@ -444,11 +436,7 @@ export default function Layout(props: LayoutProps) {
         <BottomNavLink href="/examples">Examples</BottomNavLink>
         <BottomNavButton for={ToggleIds.navbar}>Nav</BottomNavButton>
         <BottomDrawerButton for={ToggleIds.drawer}>
-          <HamburgerIcon>
-            <span></span>
-            <span></span>
-            <span></span>
-          </HamburgerIcon>
+          <HamburgerIcon />
         </BottomDrawerButton>
       </BottomDash>
     </div>
